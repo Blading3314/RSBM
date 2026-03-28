@@ -1,2 +1,2 @@
-# RRBSD
+# RSBM
 Restaurant Management
