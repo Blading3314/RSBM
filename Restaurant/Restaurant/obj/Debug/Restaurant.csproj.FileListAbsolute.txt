@@ -8,3 +8,16 @@ C:\Users\thoma\OneDrive - Vanier College\RSBM\Restaurant\Restaurant\obj\Debug\Re
 C:\Users\thoma\OneDrive - Vanier College\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.CoreCompileInputs.cache
 C:\Users\thoma\OneDrive - Vanier College\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.exe
 C:\Users\thoma\OneDrive - Vanier College\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.pdb
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\bin\Debug\Restaurant.exe.config
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\bin\Debug\Restaurant.exe
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\bin\Debug\Restaurant.pdb
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.AssemblyReference.cache
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.BillingForm.resources
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.RestoForm.resources
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.Properties.Resources.resources
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.ReservationForm.resources
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.TableForm.resources
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.GenerateResource.cache
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.CoreCompileInputs.cache
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.exe
+C:\Users\Joeffrey\source\repos\Blading3314\RSBM\Restaurant\Restaurant\obj\Debug\Restaurant.pdb

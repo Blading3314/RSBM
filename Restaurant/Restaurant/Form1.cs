@@ -16,5 +16,20 @@ namespace Restaurant
         {
             InitializeComponent();
         }
+
+        private void btnReservations_Click(object sender, EventArgs e)
+        {
+            new ReservationForm().Show();
+        }
+
+        private void btnTables_Click(object sender, EventArgs e)
+        {
+            new TableForm().Show();
+        }
+
+        private void btnBilling_Click(object sender, EventArgs e)
+        {
+            new BillingForm().Show();
+        }
     }
 }
