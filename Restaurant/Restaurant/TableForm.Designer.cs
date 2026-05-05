@@ -37,15 +37,18 @@
             this.statusComboBox = new System.Windows.Forms.ComboBox();
             this.typeComboBox = new System.Windows.Forms.ComboBox();
             this.btnUpdateTable = new System.Windows.Forms.Button();
+            this.tablesDataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.tablesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tables
             // 
             this.tables.AutoSize = true;
             this.tables.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tables.Location = new System.Drawing.Point(12, 9);
+            this.tables.Location = new System.Drawing.Point(9, 7);
+            this.tables.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tables.Name = "tables";
-            this.tables.Size = new System.Drawing.Size(169, 25);
+            this.tables.Size = new System.Drawing.Size(136, 20);
             this.tables.TabIndex = 1;
             this.tables.Text = "Manage Tables:";
             // 
@@ -53,9 +56,10 @@
             // 
             this.tableID.AutoSize = true;
             this.tableID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tableID.Location = new System.Drawing.Point(12, 321);
+            this.tableID.Location = new System.Drawing.Point(9, 261);
+            this.tableID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tableID.Name = "tableID";
-            this.tableID.Size = new System.Drawing.Size(125, 20);
+            this.tableID.Size = new System.Drawing.Size(107, 17);
             this.tableID.TabIndex = 2;
             this.tableID.Text = "Selected Table:";
             // 
@@ -63,9 +67,10 @@
             // 
             this.editTableLabel.AutoSize = true;
             this.editTableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editTableLabel.Location = new System.Drawing.Point(12, 285);
+            this.editTableLabel.Location = new System.Drawing.Point(9, 232);
+            this.editTableLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.editTableLabel.Name = "editTableLabel";
-            this.editTableLabel.Size = new System.Drawing.Size(100, 20);
+            this.editTableLabel.Size = new System.Drawing.Size(87, 17);
             this.editTableLabel.TabIndex = 3;
             this.editTableLabel.Text = "Edit Table:";
             // 
@@ -73,9 +78,10 @@
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(284, 321);
+            this.statusLabel.Location = new System.Drawing.Point(213, 261);
+            this.statusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(62, 20);
+            this.statusLabel.Size = new System.Drawing.Size(52, 17);
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Status:";
             // 
@@ -83,52 +89,68 @@
             // 
             this.typeLabel.AutoSize = true;
             this.typeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.typeLabel.Location = new System.Drawing.Point(529, 319);
+            this.typeLabel.Location = new System.Drawing.Point(397, 259);
+            this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.typeLabel.Name = "typeLabel";
-            this.typeLabel.Size = new System.Drawing.Size(50, 20);
+            this.typeLabel.Size = new System.Drawing.Size(44, 17);
             this.typeLabel.TabIndex = 5;
             this.typeLabel.Text = "Type:";
             // 
             // tableIdTextBox
             // 
             this.tableIdTextBox.BackColor = System.Drawing.Color.White;
-            this.tableIdTextBox.Location = new System.Drawing.Point(160, 319);
+            this.tableIdTextBox.Location = new System.Drawing.Point(120, 259);
+            this.tableIdTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.tableIdTextBox.Name = "tableIdTextBox";
             this.tableIdTextBox.ReadOnly = true;
-            this.tableIdTextBox.Size = new System.Drawing.Size(108, 22);
+            this.tableIdTextBox.Size = new System.Drawing.Size(82, 20);
             this.tableIdTextBox.TabIndex = 6;
             // 
             // statusComboBox
             // 
             this.statusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.statusComboBox.FormattingEnabled = true;
-            this.statusComboBox.Location = new System.Drawing.Point(352, 321);
+            this.statusComboBox.Location = new System.Drawing.Point(264, 261);
+            this.statusComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusComboBox.Name = "statusComboBox";
-            this.statusComboBox.Size = new System.Drawing.Size(156, 24);
+            this.statusComboBox.Size = new System.Drawing.Size(118, 21);
             this.statusComboBox.TabIndex = 7;
             // 
             // typeComboBox
             // 
             this.typeComboBox.FormattingEnabled = true;
-            this.typeComboBox.Location = new System.Drawing.Point(585, 321);
+            this.typeComboBox.Location = new System.Drawing.Point(439, 261);
+            this.typeComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(100, 24);
+            this.typeComboBox.Size = new System.Drawing.Size(76, 21);
             this.typeComboBox.TabIndex = 8;
             // 
             // btnUpdateTable
             // 
-            this.btnUpdateTable.Location = new System.Drawing.Point(17, 355);
+            this.btnUpdateTable.Location = new System.Drawing.Point(13, 288);
+            this.btnUpdateTable.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdateTable.Name = "btnUpdateTable";
-            this.btnUpdateTable.Size = new System.Drawing.Size(120, 38);
+            this.btnUpdateTable.Size = new System.Drawing.Size(90, 31);
             this.btnUpdateTable.TabIndex = 9;
             this.btnUpdateTable.Text = "Update Table";
             this.btnUpdateTable.UseVisualStyleBackColor = true;
             // 
+            // tablesDataGridView
+            // 
+            this.tablesDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tablesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tablesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tablesDataGridView.Location = new System.Drawing.Point(72, 45);
+            this.tablesDataGridView.Name = "tablesDataGridView";
+            this.tablesDataGridView.Size = new System.Drawing.Size(369, 166);
+            this.tablesDataGridView.TabIndex = 10;
+            // 
             // TableForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 405);
+            this.ClientSize = new System.Drawing.Size(535, 329);
+            this.Controls.Add(this.tablesDataGridView);
             this.Controls.Add(this.btnUpdateTable);
             this.Controls.Add(this.typeComboBox);
             this.Controls.Add(this.statusComboBox);
@@ -138,8 +160,10 @@
             this.Controls.Add(this.editTableLabel);
             this.Controls.Add(this.tableID);
             this.Controls.Add(this.tables);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableForm";
             this.Text = "Table MGR";
+            ((System.ComponentModel.ISupportInitialize)(this.tablesDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,5 +180,6 @@
         private System.Windows.Forms.ComboBox statusComboBox;
         private System.Windows.Forms.ComboBox typeComboBox;
         private System.Windows.Forms.Button btnUpdateTable;
+        private System.Windows.Forms.DataGridView tablesDataGridView;
     }
 }

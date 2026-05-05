@@ -1,0 +1,29 @@
+Visual Studio
+
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+Build
+
+bin/
+obj/
+Debug/
+Release/
+
+SQL Server
+
+*.mdf
+*.ldf
+
+NuGet
+
+packages/
+
+Temp
+
+*.log
+*.tmp
+*.cache
