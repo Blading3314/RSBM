@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RSBM_RestaurantMGR
@@ -17,19 +10,37 @@ namespace RSBM_RestaurantMGR
             InitializeComponent();
         }
 
+        private void OpenChildForm(Form childForm)
+        {
+            // Clear previous form
+            mainPanel.Controls.Clear();
+
+            // Configure child form
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+
+            // Add to panel
+            mainPanel.Controls.Add(childForm);
+            mainPanel.Tag = childForm;
+
+            childForm.BringToFront();
+            childForm.Show();
+        }
+
         private void btnReservations_Click(object sender, EventArgs e)
         {
-            new ReservationForm().Show();
+            OpenChildForm(new ReservationForm());
         }
 
         private void btnTables_Click(object sender, EventArgs e)
         {
-            new TableForm().Show();
+            OpenChildForm(new TableForm());
         }
 
         private void btnBilling_Click(object sender, EventArgs e)
         {
-            new BillingForm().Show();
+            OpenChildForm(new BillingForm());
         }
     }
 }

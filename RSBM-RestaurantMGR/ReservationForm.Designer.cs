@@ -54,8 +54,8 @@
             this.resStatus = new System.Windows.Forms.ComboBox();
             this.resSearch = new System.Windows.Forms.TextBox();
             this.pnlReservationInfo = new System.Windows.Forms.Panel();
-            this.lblCustomerInfo = new System.Windows.Forms.Label();
             this.lblReservationDetails = new System.Windows.Forms.Label();
+            this.lblCustomerInfo = new System.Windows.Forms.Label();
             this.todayCheckBox = new System.Windows.Forms.CheckBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.resPartySize)).BeginInit();
@@ -400,16 +400,6 @@
             this.pnlReservationInfo.Size = new System.Drawing.Size(866, 295);
             this.pnlReservationInfo.TabIndex = 23;
             // 
-            // lblCustomerInfo
-            // 
-            this.lblCustomerInfo.AutoSize = true;
-            this.lblCustomerInfo.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCustomerInfo.Location = new System.Drawing.Point(18, 12);
-            this.lblCustomerInfo.Name = "lblCustomerInfo";
-            this.lblCustomerInfo.Size = new System.Drawing.Size(176, 28);
-            this.lblCustomerInfo.TabIndex = 22;
-            this.lblCustomerInfo.Text = "CUSTOMER INFO:";
-            // 
             // lblReservationDetails
             // 
             this.lblReservationDetails.AutoSize = true;
@@ -419,6 +409,16 @@
             this.lblReservationDetails.Size = new System.Drawing.Size(234, 28);
             this.lblReservationDetails.TabIndex = 23;
             this.lblReservationDetails.Text = "RESERVATION DETAILS:";
+            // 
+            // lblCustomerInfo
+            // 
+            this.lblCustomerInfo.AutoSize = true;
+            this.lblCustomerInfo.Font = new System.Drawing.Font("Segoe UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCustomerInfo.Location = new System.Drawing.Point(18, 12);
+            this.lblCustomerInfo.Name = "lblCustomerInfo";
+            this.lblCustomerInfo.Size = new System.Drawing.Size(176, 28);
+            this.lblCustomerInfo.TabIndex = 22;
+            this.lblCustomerInfo.Text = "CUSTOMER INFO:";
             // 
             // todayCheckBox
             // 
@@ -452,6 +452,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(231)))), ((int)(((byte)(235)))));
             this.ClientSize = new System.Drawing.Size(897, 818);
             this.Controls.Add(this.btnRefresh);

@@ -21,17 +21,21 @@ namespace RSBM_RestaurantMGR
         int selectedReservationId = 0;
         public ReservationForm()
         {
+            InitializeComponent();
             LoadTimeSlots();
             LoadStatusOptions();
-            //LoadReservations();
+            resTimeSlot.SelectedIndex = 0;
+            resStatus.SelectedIndex = 0;
 
-            ClearForm();
+            LoadReservations();
+
+            //ClearForm();
 
             //btnEditReservation.Enabled = false;
             //btnDeleteReservation.Enabled = false;
         }
 
-        /*private void LoadReservations()
+        private void LoadReservations()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -59,7 +63,7 @@ namespace RSBM_RestaurantMGR
 
                 reservationGrid.DataSource = dt;
             }
-        }*/
+        }
 
         private void btnAddReservation_Click(object sender, EventArgs e)
         {
