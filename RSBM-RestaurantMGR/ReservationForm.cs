@@ -22,6 +22,9 @@ namespace RSBM_RestaurantMGR
         public ReservationForm()
         {
             InitializeComponent();
+
+            resDate.CustomFormat = "MMM dd, yyyy";
+
             LoadTimeSlots();
             LoadStatusOptions();
             resTimeSlot.SelectedIndex = 0;
@@ -43,7 +46,7 @@ namespace RSBM_RestaurantMGR
 
                 string query = @"
         SELECT
-            Reservations.ReservationID,
+            Reservations.ReservationID as ID, 
             Customers.CustomerName as Name,
             Customers.Phone,
             Reservations.Guests,
