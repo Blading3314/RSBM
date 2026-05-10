@@ -44,11 +44,13 @@ namespace RSBM_RestaurantMGR
                 string query = @"
         SELECT
             Reservations.ReservationID,
-            Customers.CustomerName,
+            Customers.CustomerName as Name,
             Customers.Phone,
             Reservations.Guests,
-            Reservations.ReservationDate,
-            RestaurantTables.TableID
+            Reservations.ReservationDate as Date,
+            Reservations.ReservationTime as Time,
+            RestaurantTables.TableID as SeatedAt,
+            Reservations.Status
         FROM Reservations
         JOIN Customers
             ON Reservations.CustomerID = Customers.CustomerID

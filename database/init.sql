@@ -7,7 +7,8 @@ GO
 USE RestaurantDB;
 GO
 
--- Drop tables if they already exist
+/* DROP OLD TABLES */
+
 IF OBJECT_ID('Bills', 'U') IS NOT NULL
     DROP TABLE Bills;
 
@@ -21,66 +22,80 @@ IF OBJECT_ID('Customers', 'U') IS NOT NULL
     DROP TABLE Customers;
 GO
 
--- Customers table
-CREATE TABLE Customers (
+/* CUSTOMERS TABLE */
+
+CREATE TABLE Customers
+(
     CustomerID INT PRIMARY KEY IDENTITY(1,1),
+
     CustomerName VARCHAR(100) NOT NULL,
-    Phone VARCHAR(20)
-);
 
--- Restaurant tables
-CREATE TABLE RestaurantTables (
+    Phone VARCHAR(20) NOT NULL,
+);
+GO
+
+/* RESTAURANT TABLES */
+
+CREATE TABLE RestaurantTables
+(
     TableID INT PRIMARY KEY IDENTITY(1,1),
+
+    TableNumber INT NOT NULL UNIQUE,
+
     Capacity INT NOT NULL,
-    Status VARCHAR(20)
-);
 
--- Reservations table
-CREATE TABLE Reservations (
+    Status VARCHAR(20) NOT NULL
+        CHECK (Status IN ('Available', 'Reserved', 'Occupied'))
+);
+GO
+
+/* RESERVATIONS */
+
+CREATE TABLE Reservations
+(
     ReservationID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT,
-    TableID INT,
-    ReservationDate DATETIME,
-    Guests INT,
 
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (TableID) REFERENCES RestaurantTables(TableID)
+    CustomerID INT NOT NULL,
+
+    TableID INT NOT NULL,
+
+    ReservationDate DATE NOT NULL,
+
+    ReservationTime TIME NOT NULL,
+
+    Guests INT NOT NULL,
+
+    Status VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (CustomerID)
+        REFERENCES Customers(CustomerID),
+
+    FOREIGN KEY (TableID)
+        REFERENCES RestaurantTables(TableID)
 );
+GO
 
--- Bills table
-CREATE TABLE Bills (
+/* BILLS */
+
+CREATE TABLE Bills
+(
     BillID INT PRIMARY KEY IDENTITY(1,1),
-    ReservationID INT,
-    TotalAmount DECIMAL(10,2),
-    TaxAmount DECIMAL(10,2),
+
+    ReservationID INT NOT NULL,
+
+    SubTotal DECIMAL(10,2) NOT NULL,
+
+    TaxAmount DECIMAL(10,2) NOT NULL,
+
+    TotalAmount DECIMAL(10,2) NOT NULL,
+
+    PaymentMethod VARCHAR(20),
+
     PaymentStatus VARCHAR(20),
 
-    FOREIGN KEY (ReservationID) REFERENCES Reservations(ReservationID)
+    BillDate DATETIME DEFAULT GETDATE(),
+
+    FOREIGN KEY (ReservationID)
+        REFERENCES Reservations(ReservationID)
 );
-
--- Sample restaurant tables
-INSERT INTO RestaurantTables (Capacity, Status)
-VALUES
-(2, 'Available'),
-(4, 'Reserved'),
-(6, 'Available');
-
--- Sample customers
-INSERT INTO Customers (CustomerName, Phone)
-VALUES
-('John Smith', '514-111-2222'),
-('Alice Brown', '514-333-4444');
-
--- Sample reservations
-INSERT INTO Reservations
-(CustomerID, TableID, ReservationDate, Guests)
-VALUES
-(1, 1, '2026-05-10 18:00:00', 4),
-(2, 3, '2026-05-11 19:30:00', 2);
-
--- Sample bills
-INSERT INTO Bills
-(ReservationID, TotalAmount, TaxAmount, PaymentStatus)
-VALUES
-(1, 120.00, 18.00, 'Paid'),
-(2, 75.00, 11.25, 'Pending');
+GO
