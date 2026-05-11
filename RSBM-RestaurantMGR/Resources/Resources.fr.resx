@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Main Form -->
+  <data name="MainForm_Title" xml:space="preserve">
+    <value>RestoMGR</value>
+  </data>
+  <data name="MainForm_Header" xml:space="preserve">
+    <value>Système de Gestion de Restaurant</value>
+  </data>
+  <data name="MainForm_Reservations" xml:space="preserve">
+    <value>Réservations</value>
+  </data>
+  <data name="MainForm_Tables" xml:space="preserve">
+    <value>Tables</value>
+  </data>
+  <data name="MainForm_Billing" xml:space="preserve">
+    <value>Facturation</value>
+  </data>
+  <data name="MainForm_Language" xml:space="preserve">
+    <value>Langue:</value>
+  </data>
+  <data name="MainForm_Quit" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+  
+  <!-- Reservation Form -->
+  <data name="ReservationForm_Title" xml:space="preserve">
+    <value>Gestion Réservations</value>
+  </data>
+  <data name="ReservationForm_Header" xml:space="preserve">
+    <value>Gérer les Réservations:</value>
+  </data>
+  <data name="ReservationForm_CustomerInfo" xml:space="preserve">
+    <value>INFO CLIENT:</value>
+  </data>
+  <data name="ReservationForm_ReservationDetails" xml:space="preserve">
+    <value>DÉTAILS RÉSERVATION:</value>
+  </data>
+  <data name="ReservationForm_CustomerName" xml:space="preserve">
+    <value>Nom du Client:</value>
+  </data>
+  <data name="ReservationForm_Phone" xml:space="preserve">
+    <value>Téléphone:</value>
+  </data>
+  <data name="ReservationForm_PartySize" xml:space="preserve">
+    <value>Taille du Groupe:</value>
+  </data>
+  <data name="ReservationForm_Date" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="ReservationForm_Time" xml:space="preserve">
+    <value>Heure:</value>
+  </data>
+  <data name="ReservationForm_Table" xml:space="preserve">
+    <value>Table:</value>
+  </data>
+  <data name="ReservationForm_Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="ReservationForm_Search" xml:space="preserve">
+    <value>Rechercher (Nom/ID):</value>
+  </data>
+  <data name="ReservationForm_ShowToday" xml:space="preserve">
+    <value>Afficher les Réservations d'Aujourd'hui</value>
+  </data>
+  <data name="ReservationForm_AddReservation" xml:space="preserve">
+    <value>Ajouter Réservation</value>
+  </data>
+  <data name="ReservationForm_EditReservation" xml:space="preserve">
+    <value>Modifier Réservation</value>
+  </data>
+  <data name="ReservationForm_DeleteReservation" xml:space="preserve">
+    <value>Supprimer Réservation</value>
+  </data>
+  <data name="ReservationForm_Clear" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="ReservationForm_Refresh" xml:space="preserve">
+    <value>Actualiser</value>
+  </data>
+  
+  <!-- Status Options -->
+  <data name="Status_Confirmed" xml:space="preserve">
+    <value>Confirmée</value>
+  </data>
+  <data name="Status_Pending" xml:space="preserve">
+    <value>En Attente</value>
+  </data>
+  <data name="Status_Seated" xml:space="preserve">
+    <value>Installée</value>
+  </data>
+  <data name="Status_Completed" xml:space="preserve">
+    <value>Terminée</value>
+  </data>
+  <data name="Status_Cancelled" xml:space="preserve">
+    <value>Annulée</value>
+  </data>
+  <data name="Status_NoShow" xml:space="preserve">
+    <value>Non Présenté</value>
+  </data>
+  
+  <!-- Messages -->
+  <data name="Message_ReservationAdded" xml:space="preserve">
+    <value>Réservation ajoutée avec succès.</value>
+  </data>
+  <data name="Message_ReservationUpdated" xml:space="preserve">
+    <value>Réservation mise à jour avec succès.</value>
+  </data>
+  <data name="Message_ReservationDeleted" xml:space="preserve">
+    <value>Réservation supprimée.</value>
+  </data>
+  <data name="Message_SelectReservation" xml:space="preserve">
+    <value>Veuillez sélectionner une réservation.</value>
+  </data>
+  <data name="Message_ConfirmDelete" xml:space="preserve">
+    <value>Supprimer cette réservation?</value>
+  </data>
+  <data name="Message_ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirmer la Suppression</value>
+  </data>
+  
+  <!-- Table Form -->
+  <data name="TableForm_Title" xml:space="preserve">
+    <value>Gestion Tables</value>
+  </data>
+  <data name="TableForm_Header" xml:space="preserve">
+    <value>Gérer les Tables:</value>
+  </data>
+  <data name="TableForm_SelectedTable" xml:space="preserve">
+    <value>Table Sélectionnée:</value>
+  </data>
+  <data name="TableForm_EditTable" xml:space="preserve">
+    <value>Modifier la Table:</value>
+  </data>
+  <data name="TableForm_Status" xml:space="preserve">
+    <value>Statut:</value>
+  </data>
+  <data name="TableForm_Type" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="TableForm_UpdateTable" xml:space="preserve">
+    <value>Mettre à Jour</value>
+  </data>
+  <data name="TableGrid_TableNumber" xml:space="preserve">
+    <value>Table #</value>
+  </data>
+  <data name="TableGrid_Capacity" xml:space="preserve">
+    <value>Places</value>
+  </data>
+  <data name="TableGrid_TableType" xml:space="preserve">
+    <value>Table BBQ coréen</value>
+  </data>
+  <data name="TableGrid_Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="TableStatus_Available" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="TableStatus_Reserved" xml:space="preserve">
+    <value>Réservée</value>
+  </data>
+  <data name="TableStatus_Occupied" xml:space="preserve">
+    <value>Occupée</value>
+  </data>
+  <data name="TableType_TwoSeat" xml:space="preserve">
+    <value>Gril BBQ 2 places</value>
+  </data>
+  <data name="TableType_FourSeat" xml:space="preserve">
+    <value>Gril BBQ 4 places</value>
+  </data>
+  <data name="TableType_SixSeat" xml:space="preserve">
+    <value>Gril familial 6 places</value>
+  </data>
+  <data name="TableType_EightSeat" xml:space="preserve">
+    <value>Gril de groupe 8 places</value>
+  </data>
+  <data name="Message_TableUpdated" xml:space="preserve">
+    <value>Table mise à jour avec succès.</value>
+  </data>
+  <data name="Message_SelectTable" xml:space="preserve">
+    <value>Veuillez sélectionner une table.</value>
+  </data>
+  <data name="Message_SelectTableOptions" xml:space="preserve">
+    <value>Veuillez sélectionner un statut et un type de table.</value>
+  </data>
+  <data name="Message_TableLoadError" xml:space="preserve">
+    <value>Impossible de charger les tables.</value>
+  </data>
+  <data name="Message_TableUpdateError" xml:space="preserve">
+    <value>Impossible de mettre à jour la table.</value>
+  </data>
+  
+  <!-- Billing Form -->
+  <data name="BillingForm_Title" xml:space="preserve">
+    <value>Gestion Facturation</value>
+  </data>
+  <data name="BillingForm_Header" xml:space="preserve">
+    <value>Gérer la Facture:</value>
+  </data>
+  <data name="BillingForm_TableInfo" xml:space="preserve">
+    <value>Infos Table:</value>
+  </data>
+  <data name="BillingForm_Info" xml:space="preserve">
+    <value>Infos:</value>
+  </data>
+  <data name="BillingForm_Table" xml:space="preserve">
+    <value>Table:</value>
+  </data>
+  <data name="BillingForm_Pricing" xml:space="preserve">
+    <value>Prix:</value>
+  </data>
+  <data name="BillingForm_NumberOfPeople" xml:space="preserve">
+    <value>Nombre de Personnes:</value>
+  </data>
+  <data name="BillingForm_PricePerPerson" xml:space="preserve">
+    <value>Prix par Personne:</value>
+  </data>
+  <data name="BillingForm_PaymentMethod" xml:space="preserve">
+    <value>Méthode de Paiement:</value>
+  </data>
+  <data name="BillingForm_Payment" xml:space="preserve">
+    <value>Paiement:</value>
+  </data>
+  <data name="BillingForm_Total" xml:space="preserve">
+    <value>Total:</value>
+  </data>
+  <data name="BillingForm_Tip" xml:space="preserve">
+    <value>Pourboire (%):</value>
+  </data>
+  <data name="BillingForm_Subtotal" xml:space="preserve">
+    <value>Sous-total:</value>
+  </data>
+  <data name="BillingForm_Extras" xml:space="preserve">
+    <value>Suppléments:</value>
+  </data>
+  <data name="BillingForm_PremiumMeat" xml:space="preserve">
+    <value>Viande Premium</value>
+  </data>
+  <data name="BillingForm_Drinks" xml:space="preserve">
+    <value>Boissons</value>
+  </data>
+  <data name="BillingForm_GenerateBill" xml:space="preserve">
+    <value>Générer Facture</value>
+  </data>
+</root>

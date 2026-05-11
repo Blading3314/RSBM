@@ -117,7 +117,7 @@
             this.typeComboBox.Location = new System.Drawing.Point(585, 321);
             this.typeComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(100, 24);
+            this.typeComboBox.Size = new System.Drawing.Size(171, 24);
             this.typeComboBox.TabIndex = 8;
             // 
             // btnUpdateTable
@@ -125,7 +125,7 @@
             this.btnUpdateTable.Location = new System.Drawing.Point(17, 354);
             this.btnUpdateTable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnUpdateTable.Name = "btnUpdateTable";
-            this.btnUpdateTable.Size = new System.Drawing.Size(120, 38);
+            this.btnUpdateTable.Size = new System.Drawing.Size(140, 38);
             this.btnUpdateTable.TabIndex = 9;
             this.btnUpdateTable.Text = "Update Table";
             this.btnUpdateTable.UseVisualStyleBackColor = true;
@@ -140,14 +140,14 @@
             this.tableGrid.ReadOnly = true;
             this.tableGrid.RowHeadersWidth = 51;
             this.tableGrid.RowTemplate.Height = 24;
-            this.tableGrid.Size = new System.Drawing.Size(684, 223);
+            this.tableGrid.Size = new System.Drawing.Size(740, 223);
             this.tableGrid.TabIndex = 10;
             // 
             // TableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 405);
+            this.ClientSize = new System.Drawing.Size(780, 405);
             this.Controls.Add(this.tableGrid);
             this.Controls.Add(this.btnUpdateTable);
             this.Controls.Add(this.typeComboBox);

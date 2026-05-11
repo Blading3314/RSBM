@@ -49,6 +49,18 @@ CREATE TABLE RestaurantTables
 );
 GO
 
+INSERT INTO RestaurantTables (TableNumber, Capacity, Status)
+VALUES
+    (1, 2, 'Available'),
+    (2, 2, 'Available'),
+    (3, 4, 'Available'),
+    (4, 4, 'Available'),
+    (5, 4, 'Available'),
+    (6, 6, 'Available'),
+    (7, 6, 'Available'),
+    (8, 8, 'Available');
+GO
+
 /* RESERVATIONS */
 
 CREATE TABLE Reservations

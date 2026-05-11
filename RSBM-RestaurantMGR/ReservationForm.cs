@@ -38,6 +38,23 @@ namespace RSBM_RestaurantMGR
             //btnDeleteReservation.Enabled = false;
         }
 
+        public void ApplyLanguage()
+        {
+            LanguageManager.ApplyLanguageToForm(this);
+            
+            // Update status options with translated text
+            LanguageManager.UpdateComboBoxItems(resStatus, 
+                "Status_Confirmed", 
+                "Status_Pending", 
+                "Status_Seated", 
+                "Status_Completed", 
+                "Status_Cancelled", 
+                "Status_NoShow");
+            
+            if (resStatus.Items.Count > 0)
+                resStatus.SelectedIndex = 0;
+        }
+
         private void LoadReservations()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -133,7 +150,7 @@ namespace RSBM_RestaurantMGR
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show(
-                    "Reservation added successfully.");
+                    LanguageManager.GetString("Message_ReservationAdded"));
 
                 //LoadReservations();
 
@@ -146,7 +163,7 @@ namespace RSBM_RestaurantMGR
             if (selectedReservationId == 0)
             {
                 MessageBox.Show(
-                    "Please select a reservation.");
+                    LanguageManager.GetString("Message_SelectReservation"));
 
                 return;
             }
@@ -206,7 +223,7 @@ namespace RSBM_RestaurantMGR
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show(
-                    "Reservation updated successfully.");
+                    LanguageManager.GetString("Message_ReservationUpdated"));
 
                 //LoadReservations();
 
@@ -219,15 +236,15 @@ namespace RSBM_RestaurantMGR
             if (selectedReservationId == 0)
             {
                 MessageBox.Show(
-                    "Please select a reservation.");
+                    LanguageManager.GetString("Message_SelectReservation"));
 
                 return;
             }
 
             DialogResult result =
                 MessageBox.Show(
-                    "Delete this reservation?",
-                    "Confirm Delete",
+                    LanguageManager.GetString("Message_ConfirmDelete"),
+                    LanguageManager.GetString("Message_ConfirmDeleteTitle"),
                     MessageBoxButtons.YesNo
                 );
 
@@ -252,7 +269,7 @@ namespace RSBM_RestaurantMGR
                     cmd.ExecuteNonQuery();
 
                     MessageBox.Show(
-                        "Reservation deleted.");
+                        LanguageManager.GetString("Message_ReservationDeleted"));
 
                     //LoadReservations();
 
@@ -297,12 +314,13 @@ namespace RSBM_RestaurantMGR
 
         private void LoadStatusOptions()
         {
-            resStatus.Items.Add("Confirmed");
-            resStatus.Items.Add("Pending");
-            resStatus.Items.Add("Seated");
-            resStatus.Items.Add("Completed");
-            resStatus.Items.Add("Cancelled");
-            resStatus.Items.Add("No-show");
+            LanguageManager.UpdateComboBoxItems(resStatus, 
+                "Status_Confirmed", 
+                "Status_Pending", 
+                "Status_Seated", 
+                "Status_Completed", 
+                "Status_Cancelled", 
+                "Status_NoShow");
         }
 
     }

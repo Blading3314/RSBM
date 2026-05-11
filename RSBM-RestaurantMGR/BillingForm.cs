@@ -16,5 +16,10 @@ namespace RSBM_RestaurantMGR
         {
             InitializeComponent();
         }
+
+        public void ApplyLanguage()
+        {
+            LanguageManager.ApplyLanguageToForm(this);
+        }
     }
 }
