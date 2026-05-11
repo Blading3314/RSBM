@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RSBM_RestaurantMGR
@@ -45,15 +46,15 @@ namespace RSBM_RestaurantMGR
         {
             try
             {
-                // Apply language to main form
+               
                 LanguageManager.ApplyLanguageToForm(this);
                 
-                // Apply language to current child form if exists
+                
                 if (mainPanel.Controls.Count > 0 && mainPanel.Controls[0] is Form)
                 {
                     Form childForm = (Form)mainPanel.Controls[0];
                     
-                    // Call the specific ApplyLanguage method if it exists
+                  
                     if (childForm is ReservationForm)
                     {
                         ((ReservationForm)childForm).ApplyLanguage();
@@ -82,19 +83,19 @@ namespace RSBM_RestaurantMGR
 
         private void OpenChildForm(Form childForm)
         {
-            // Clear previous form
+           
             mainPanel.Controls.Clear();
 
-            // Configure child form
+           
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
-            // Add to panel
+            
             mainPanel.Controls.Add(childForm);
             mainPanel.Tag = childForm;
 
-            // Apply language to child form
+           
             if (childForm is ReservationForm)
             {
                 ((ReservationForm)childForm).ApplyLanguage();
@@ -138,13 +139,13 @@ namespace RSBM_RestaurantMGR
                     break;
             }
 
-            // Set the culture
+           
             LanguageManager.SetCulture(cultureCode);
             
             Properties.Settings.Default.Language = cultureCode;
             Properties.Settings.Default.Save();
 
-            // Apply language to all forms
+            
             ApplyLanguage();
         }
 
@@ -165,14 +166,63 @@ namespace RSBM_RestaurantMGR
 
         private void quitButton_Click(object sender, EventArgs e)
         {
-            //Confirm before quitting
-            var result = MessageBox.Show("Are you sure you want to quit?", "Confirm Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+           
+            string message = GetLocalizedText("MainForm_QuitConfirmation", "Are you sure you want to quit?");
+            string caption = GetLocalizedText("MainForm_Quit", "Quit");
+            string yesText = GetLocalizedText("MainForm_Yes", "Yes");
+            string noText = GetLocalizedText("MainForm_No", "No");
+            DialogResult result = ShowLocalizedYesNoDialog(message, caption, yesText, noText);
+
             if (result == DialogResult.Yes)
             {
                 Application.Exit();
             }
+        }
 
+        private string GetLocalizedText(string resourceKey, string fallback)
+        {
+            string text = LanguageManager.GetString(resourceKey);
+            return string.IsNullOrWhiteSpace(text) || text == resourceKey ? fallback : text;
+        }
 
+        private DialogResult ShowLocalizedYesNoDialog(string message, string caption, string yesText, string noText)
+        {
+            using (Form dialog = new Form())
+            using (Label messageLabel = new Label())
+            using (Button yesButton = new Button())
+            using (Button noButton = new Button())
+            {
+                dialog.Text = caption;
+                dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dialog.StartPosition = FormStartPosition.CenterParent;
+                dialog.ClientSize = new Size(360, 145);
+                dialog.MaximizeBox = false;
+                dialog.MinimizeBox = false;
+                dialog.ShowInTaskbar = false;
+                dialog.AcceptButton = yesButton;
+                dialog.CancelButton = noButton;
+
+                messageLabel.Text = message;
+                messageLabel.Location = new Point(18, 18);
+                messageLabel.Size = new Size(324, 55);
+                messageLabel.TextAlign = ContentAlignment.MiddleLeft;
+
+                yesButton.Text = yesText;
+                yesButton.DialogResult = DialogResult.Yes;
+                yesButton.Location = new Point(156, 94);
+                yesButton.Size = new Size(88, 30);
+
+                noButton.Text = noText;
+                noButton.DialogResult = DialogResult.No;
+                noButton.Location = new Point(254, 94);
+                noButton.Size = new Size(88, 30);
+
+                dialog.Controls.Add(messageLabel);
+                dialog.Controls.Add(yesButton);
+                dialog.Controls.Add(noButton);
+
+                return dialog.ShowDialog(this);
+            }
         }
     }
 }

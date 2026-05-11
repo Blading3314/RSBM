@@ -282,9 +282,20 @@ namespace RSBM_RestaurantMGR
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
+                //if no changes were made, print a message to the user
+                if (tableGrid.CurrentRow != null && tableGrid.CurrentRow.Cells["Status"].Value.ToString() == selectedStatus &&
+                    tableGrid.CurrentRow.Cells["Capacity"].Value.ToString() == selectedCapacity)
+                {
+                    MessageBox.Show(LanguageManager.GetString("Message_NoChangesMade"));
+                    return;
+                }
+                else
+                {
 
-                MessageBox.Show(LanguageManager.GetString("Message_TableUpdated"));
-                LoadTables();
+                    MessageBox.Show(LanguageManager.GetString("Message_TableUpdated"));
+                    LoadTables();
+                }
+            
             }
             catch (Exception ex)
             {
