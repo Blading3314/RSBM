@@ -17,6 +17,7 @@ namespace RSBM_RestaurantMGR
         @"Data Source=(LocalDB)\MSSQLLocalDB;
         Initial Catalog=RestaurantDB;
         Integrated Security=True";
+
         public BillingForm()
         {
             InitializeComponent();
@@ -25,48 +26,51 @@ namespace RSBM_RestaurantMGR
             LoadBills();
             LoadPaymentStatus();
         }
-      
+
         public void ApplyLanguage()
         {
-            string selectedPayment =
-                GetSelectedValue(paymentMethodComboBox);
+            string selectedPayment = GetSelectedValue(paymentMethodComboBox);
+            string selectedStatus = GetSelectedValue(Status);
 
             LanguageManager.ApplyLanguageToForm(this);
 
-            LoadPaymentMethods();
-
-            SelectComboBoxValue(
-                paymentMethodComboBox,
-                selectedPayment);
+            SelectComboBoxValue(paymentMethodComboBox, selectedPayment);
+            SelectComboBoxValue(Status, selectedStatus);
         }
 
         private void LoadPaymentMethods()
         {
+            paymentMethodComboBox.BeginUpdate();
             paymentMethodComboBox.Items.Clear();
 
-            paymentMethodComboBox.Items.Add(
-                new ComboBoxItem(
-                    LanguageManager.GetString("Payment_Cash"),
-                    "Cash"));
+            paymentMethodComboBox.Items.Add(new ComboBoxItem(
+                LanguageManager.GetString("Payment_Cash"),
+                "Cash"));
 
-            paymentMethodComboBox.Items.Add(
-                new ComboBoxItem(
-                    LanguageManager.GetString("Payment_Debit"),
-                    "Debit"));
+            paymentMethodComboBox.Items.Add(new ComboBoxItem(
+                LanguageManager.GetString("Payment_Debit"),
+                "Debit"));
 
-            paymentMethodComboBox.Items.Add(
-                new ComboBoxItem(
-                    LanguageManager.GetString("Payment_Credit"),
-                    "Credit"));
+            paymentMethodComboBox.Items.Add(new ComboBoxItem(
+                LanguageManager.GetString("Payment_Credit"),
+                "Credit"));
+
+            paymentMethodComboBox.EndUpdate();
         }
         private void LoadPaymentStatus()
         {
+            Status.BeginUpdate();
             Status.Items.Clear();
 
-            Status.Items.Add("Paid");
-            Status.Items.Add("Waiting");
+            Status.Items.Add(new ComboBoxItem(
+                LanguageManager.GetString("status_paid"),
+                "Paid"));
 
-            Status.SelectedIndex = 0;
+            Status.Items.Add(new ComboBoxItem(
+                LanguageManager.GetString("status_waiting"),
+                "Waiting"));
+
+            Status.EndUpdate();
         }
 
         private static string GetSelectedValue(
@@ -80,11 +84,9 @@ namespace RSBM_RestaurantMGR
                 : item.Value;
         }
 
-        private static void SelectComboBoxValue(
-            ComboBox comboBox,
-            string value)
+        private static void SelectComboBoxValue(ComboBox comboBox, string value)
         {
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 comboBox.SelectedIndex = -1;
                 return;
@@ -92,14 +94,13 @@ namespace RSBM_RestaurantMGR
 
             for (int i = 0; i < comboBox.Items.Count; i++)
             {
-                ComboBoxItem item =
-                    comboBox.Items[i] as ComboBoxItem;
-
-                if (item != null &&
-                    item.Value == value)
+                if (comboBox.Items[i] is ComboBoxItem item)
                 {
-                    comboBox.SelectedIndex = i;
-                    return;
+                    if (string.Equals(item.Value, value, StringComparison.Ordinal))
+                    {
+                        comboBox.SelectedIndex = i;
+                        return;
+                    }
                 }
             }
 
@@ -122,7 +123,7 @@ namespace RSBM_RestaurantMGR
 
             public override string ToString()
             {
-                return Text;
+                return Text ?? Value;
             }
         }
         private void CalculateBill()
@@ -166,6 +167,7 @@ namespace RSBM_RestaurantMGR
             pricePerPersonTextBox.Text =
                 (total / people).ToString("0.00");
         }
+
         private void LoadBills()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -181,6 +183,59 @@ namespace RSBM_RestaurantMGR
 
                 dataGridBill.DataSource = table;
             }
+        }
+        private void btnUpdateStatus_Click(object sender, EventArgs e)
+        {
+            if (dataGridBill.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a bill.");
+                return;
+            }
+
+            if (Status.SelectedItem == null)
+            {
+                MessageBox.Show("Select Paid or Waiting.");
+                return;
+            }
+
+            // Get BillID from selected row
+            int billID = 0;
+            if (!string.IsNullOrEmpty(selectedBillId.Text))
+            {
+                int.TryParse(selectedBillId.Text, out billID);
+            }
+            if (billID == 0)
+            {
+                billID = Convert.ToInt32(
+                    dataGridBill.SelectedRows[0]
+                    .Cells["BillID"].Value);
+            }
+
+            // Get selected status
+            string paymentStatus =
+                Status.SelectedItem.ToString();
+
+            using (SqlConnection conn =
+                new SqlConnection(connectionString))
+            {
+                string query =
+                    @"UPDATE Bills
+              SET PaymentStatus = @PaymentStatus
+              WHERE BillID = @BillID";
+
+                SqlCommand cmd =
+                    new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@PaymentStatus", paymentStatus);
+                cmd.Parameters.AddWithValue("@BillID", billID);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Payment status updated!");
+
+            LoadBills();
         }
 
         private void btnGenerateBill_Click(object sender, EventArgs e)
@@ -233,13 +288,14 @@ namespace RSBM_RestaurantMGR
                     cmd.Parameters.AddWithValue("@TaxAmount",taxAmount);
                     cmd.Parameters.AddWithValue("@TotalAmount", total);
                     cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
-                    cmd.Parameters.AddWithValue("@PaymentStatus", "Paid");
+                    cmd.Parameters.AddWithValue("@PaymentStatus", "Waiting");
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
 
                 ShowMessage("Message_BillSaved");
+                LoadBills();
             }
             catch (Exception ex)
             {
@@ -263,7 +319,79 @@ namespace RSBM_RestaurantMGR
 
         private void dataGridBill_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            LoadSelectedBill();
+        }
 
+        private void dataGridBill_SelectionChanged(object sender, EventArgs e)
+        {
+            LoadSelectedBill();
+        }
+
+        private void LoadSelectedBill()
+        {
+            if (dataGridBill.CurrentRow == null || dataGridBill.CurrentRow.IsNewRow)
+                return;
+
+            object billIdValue = dataGridBill.CurrentRow.Cells["BillID"].Value;
+
+            if (billIdValue == null || billIdValue == DBNull.Value)
+                return;
+
+            int id;
+            if (!int.TryParse(billIdValue.ToString(), out id))
+                return;
+
+            selectedBillId.Text = id.ToString();
+
+            object statusValue = dataGridBill.CurrentRow.Cells["PaymentStatus"].Value;
+            if (statusValue != null && statusValue != DBNull.Value)
+            {
+                SelectComboBoxValue(Status, statusValue.ToString());
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(selectedBillId.Text))
+            {
+                MessageBox.Show("Please select a bill to delete.");
+                return;
+            }
+
+            int billID;
+            if (!int.TryParse(selectedBillId.Text, out billID))
+            {
+                MessageBox.Show("Invalid Bill ID.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete Bill ID: {billID}?", "Delete Bill", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        string query = "DELETE FROM Bills WHERE BillID = @BillID";
+
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@BillID", billID);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Bill successfully deleted.");
+                    selectedBillId.Clear();
+                    Status.SelectedIndex = -1;
+                    LoadBills();
+                }
+                catch (Exception ex)
+                {
+                    ShowError("Message_DeleteError", ex);
+                }
+            }
         }
     }
 

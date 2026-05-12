@@ -61,7 +61,8 @@ namespace RSBM_RestaurantMGR
             { "extrasGroupBox", "BillingForm_Extras" },
             { "premiumCheckBox", "BillingForm_PremiumMeat" },
             { "drinksCheckBox", "BillingForm_Drinks" },
-            { "btnGenerateBill", "BillingForm_GenerateBill" }
+            { "btnGenerateBill", "BillingForm_GenerateBill" },
+            {"BillIDLabel","BillingForm_BillIDlabel" }
         };
 
         static LanguageManager()

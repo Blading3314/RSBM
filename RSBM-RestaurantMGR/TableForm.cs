@@ -243,7 +243,7 @@ namespace RSBM_RestaurantMGR
             }
 
             selectedTableId = Convert.ToInt32(tableIdValue);
-            tableIdTextBox.Text = Convert.ToString(tableNumberValue);
+            selectBillId.Text = Convert.ToString(tableNumberValue);
             SelectComboBoxValue(typeComboBox, Convert.ToString(capacityValue));
             SelectComboBoxValue(statusComboBox, Convert.ToString(statusValue));
             btnUpdateTable.Enabled = true;
@@ -308,7 +308,7 @@ namespace RSBM_RestaurantMGR
         private void ClearSelection()
         {
             selectedTableId = 0;
-            tableIdTextBox.Clear();
+            selectBillId.Clear();
             statusComboBox.SelectedIndex = -1;
             typeComboBox.SelectedIndex = -1;
             btnUpdateTable.Enabled = false;

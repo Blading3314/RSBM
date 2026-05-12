@@ -49,8 +49,10 @@
             this.btnGenerateBill = new System.Windows.Forms.Button();
             this.dataGridBill = new System.Windows.Forms.DataGridView();
             this.Status = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Update = new System.Windows.Forms.Button();
+            this.selectedBillId = new System.Windows.Forms.TextBox();
+            this.BillIDLabel = new System.Windows.Forms.Label();
+            this.DeleteButton = new System.Windows.Forms.Button();
             this.aycePricingGrpupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfPeople)).BeginInit();
             this.paymentMethodGroupBox.SuspendLayout();
@@ -77,7 +79,7 @@
             this.aycePricingGrpupBox.Controls.Add(this.numGuestsLabel);
             this.aycePricingGrpupBox.Controls.Add(this.priceLabel);
             this.aycePricingGrpupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aycePricingGrpupBox.Location = new System.Drawing.Point(270, 145);
+            this.aycePricingGrpupBox.Location = new System.Drawing.Point(270, 58);
             this.aycePricingGrpupBox.Margin = new System.Windows.Forms.Padding(2);
             this.aycePricingGrpupBox.Name = "aycePricingGrpupBox";
             this.aycePricingGrpupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -275,40 +277,61 @@
             // dataGridBill
             // 
             this.dataGridBill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridBill.Location = new System.Drawing.Point(13, 399);
+            this.dataGridBill.Location = new System.Drawing.Point(13, 377);
             this.dataGridBill.Name = "dataGridBill";
             this.dataGridBill.RowHeadersWidth = 51;
             this.dataGridBill.Size = new System.Drawing.Size(493, 270);
             this.dataGridBill.TabIndex = 7;
             this.dataGridBill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridBill_CellContentClick);
+            this.dataGridBill.SelectionChanged += new System.EventHandler(this.dataGridBill_SelectionChanged);
             // 
             // Status
             // 
             this.Status.FormattingEnabled = true;
-            this.Status.Location = new System.Drawing.Point(75, 689);
+            this.Status.Location = new System.Drawing.Point(185, 658);
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(121, 21);
             this.Status.TabIndex = 8;
+            this.Status.Text = "Status";
             // 
-            // label1
+            // Update
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(18, 695);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 15);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Status:";
+            this.Update.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Update.Location = new System.Drawing.Point(318, 656);
+            this.Update.Name = "Update";
+            this.Update.Size = new System.Drawing.Size(75, 23);
+            this.Update.TabIndex = 10;
+            this.Update.Text = "Update";
+            this.Update.UseVisualStyleBackColor = true;
+            this.Update.Click += new System.EventHandler(this.btnUpdateStatus_Click);
             // 
-            // button1
+            // selectedBillId
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(250, 687);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Update";
-            this.button1.UseVisualStyleBackColor = true;
+            this.selectedBillId.Location = new System.Drawing.Point(63, 659);
+            this.selectedBillId.Name = "selectedBillId";
+            this.selectedBillId.Size = new System.Drawing.Size(100, 20);
+            this.selectedBillId.TabIndex = 11;
+            // 
+            // BillIDLabel
+            // 
+            this.BillIDLabel.AutoSize = true;
+            this.BillIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BillIDLabel.Location = new System.Drawing.Point(17, 664);
+            this.BillIDLabel.Name = "BillIDLabel";
+            this.BillIDLabel.Size = new System.Drawing.Size(46, 15);
+            this.BillIDLabel.TabIndex = 12;
+            this.BillIDLabel.Text = "Bill ID";
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DeleteButton.Location = new System.Drawing.Point(399, 656);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.TabIndex = 13;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // BillingForm
             // 
@@ -316,8 +339,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(526, 948);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DeleteButton);
+            this.Controls.Add(this.BillIDLabel);
+            this.Controls.Add(this.selectedBillId);
+            this.Controls.Add(this.Update);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.dataGridBill);
             this.Controls.Add(this.btnGenerateBill);
@@ -365,7 +390,9 @@
         private System.Windows.Forms.Button btnGenerateBill;
         private System.Windows.Forms.DataGridView dataGridBill;
         private System.Windows.Forms.ComboBox Status;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Update;
+        private System.Windows.Forms.TextBox selectedBillId;
+        private System.Windows.Forms.Label BillIDLabel;
+        private System.Windows.Forms.Button DeleteButton;
     }
 }

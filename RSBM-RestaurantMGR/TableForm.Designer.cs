@@ -33,7 +33,7 @@
             this.editTableLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.typeLabel = new System.Windows.Forms.Label();
-            this.tableIdTextBox = new System.Windows.Forms.TextBox();
+            this.selectBillId = new System.Windows.Forms.TextBox();
             this.statusComboBox = new System.Windows.Forms.ComboBox();
             this.typeComboBox = new System.Windows.Forms.ComboBox();
             this.btnUpdateTable = new System.Windows.Forms.Button();
@@ -96,22 +96,22 @@
             this.typeLabel.TabIndex = 5;
             this.typeLabel.Text = "Type:";
             // 
-            // tableIdTextBox
+            // selectBillId
             // 
-            this.tableIdTextBox.BackColor = System.Drawing.Color.White;
-            this.tableIdTextBox.Location = new System.Drawing.Point(130, 346);
-            this.tableIdTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tableIdTextBox.Name = "tableIdTextBox";
-            this.tableIdTextBox.ReadOnly = true;
-            this.tableIdTextBox.Size = new System.Drawing.Size(82, 20);
-            this.tableIdTextBox.TabIndex = 6;
+            this.selectBillId.BackColor = System.Drawing.Color.White;
+            this.selectBillId.Location = new System.Drawing.Point(130, 346);
+            this.selectBillId.Margin = new System.Windows.Forms.Padding(2);
+            this.selectBillId.Name = "selectBillId";
+            this.selectBillId.ReadOnly = true;
+            this.selectBillId.Size = new System.Drawing.Size(82, 20);
+            this.selectBillId.TabIndex = 6;
             // 
             // statusComboBox
             // 
             this.statusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.statusComboBox.FormattingEnabled = true;
             this.statusComboBox.Location = new System.Drawing.Point(303, 346);
-            this.statusComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.statusComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.statusComboBox.Name = "statusComboBox";
             this.statusComboBox.Size = new System.Drawing.Size(118, 21);
             this.statusComboBox.TabIndex = 7;
@@ -120,7 +120,7 @@
             // 
             this.typeComboBox.FormattingEnabled = true;
             this.typeComboBox.Location = new System.Drawing.Point(520, 346);
-            this.typeComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.typeComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.typeComboBox.Name = "typeComboBox";
             this.typeComboBox.Size = new System.Drawing.Size(129, 21);
             this.typeComboBox.TabIndex = 8;
@@ -128,13 +128,12 @@
             // btnUpdateTable
             // 
             this.btnUpdateTable.Location = new System.Drawing.Point(13, 396);
-            this.btnUpdateTable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUpdateTable.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdateTable.Name = "btnUpdateTable";
             this.btnUpdateTable.Size = new System.Drawing.Size(105, 31);
             this.btnUpdateTable.TabIndex = 9;
             this.btnUpdateTable.Text = "Update Table";
             this.btnUpdateTable.UseVisualStyleBackColor = true;
-          //  this.btnUpdateTable.Click += new System.EventHandler(this.btnUpdateTable_Click_1);
             // 
             // tableGrid
             // 
@@ -142,7 +141,7 @@
             this.tableGrid.AllowUserToDeleteRows = false;
             this.tableGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableGrid.Location = new System.Drawing.Point(12, 38);
-            this.tableGrid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableGrid.Margin = new System.Windows.Forms.Padding(2);
             this.tableGrid.Name = "tableGrid";
             this.tableGrid.ReadOnly = true;
             this.tableGrid.RowHeadersWidth = 51;
@@ -159,13 +158,13 @@
             this.Controls.Add(this.btnUpdateTable);
             this.Controls.Add(this.typeComboBox);
             this.Controls.Add(this.statusComboBox);
-            this.Controls.Add(this.tableIdTextBox);
+            this.Controls.Add(this.selectBillId);
             this.Controls.Add(this.typeLabel);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.editTableLabel);
             this.Controls.Add(this.tableID);
             this.Controls.Add(this.tables);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TableForm";
             this.Text = "Table MGR";
             ((System.ComponentModel.ISupportInitialize)(this.tableGrid)).EndInit();
@@ -181,7 +180,7 @@
         private System.Windows.Forms.Label editTableLabel;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.Label typeLabel;
-        private System.Windows.Forms.TextBox tableIdTextBox;
+        private System.Windows.Forms.TextBox selectBillId;
         private System.Windows.Forms.ComboBox statusComboBox;
         private System.Windows.Forms.ComboBox typeComboBox;
         private System.Windows.Forms.Button btnUpdateTable;
