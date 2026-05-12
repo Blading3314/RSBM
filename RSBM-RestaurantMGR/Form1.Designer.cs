@@ -47,10 +47,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(4, 9);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(5, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(304, 30);
+            this.label1.Size = new System.Drawing.Size(385, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "Restaurant Manager System";
             // 
@@ -61,9 +60,9 @@
             this.btnReservations.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReservations.ForeColor = System.Drawing.Color.White;
             this.btnReservations.Location = new System.Drawing.Point(0, 0);
-            this.btnReservations.Margin = new System.Windows.Forms.Padding(2);
+            this.btnReservations.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReservations.Name = "btnReservations";
-            this.btnReservations.Size = new System.Drawing.Size(135, 37);
+            this.btnReservations.Size = new System.Drawing.Size(180, 46);
             this.btnReservations.TabIndex = 1;
             this.btnReservations.Text = "Reservations";
             this.btnReservations.UseVisualStyleBackColor = true;
@@ -75,10 +74,10 @@
             this.btnTables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTables.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTables.ForeColor = System.Drawing.Color.White;
-            this.btnTables.Location = new System.Drawing.Point(0, 41);
-            this.btnTables.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTables.Location = new System.Drawing.Point(0, 50);
+            this.btnTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTables.Name = "btnTables";
-            this.btnTables.Size = new System.Drawing.Size(135, 37);
+            this.btnTables.Size = new System.Drawing.Size(180, 46);
             this.btnTables.TabIndex = 2;
             this.btnTables.Text = "Tables";
             this.btnTables.UseVisualStyleBackColor = true;
@@ -90,10 +89,10 @@
             this.btnBilling.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBilling.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBilling.ForeColor = System.Drawing.Color.White;
-            this.btnBilling.Location = new System.Drawing.Point(0, 83);
-            this.btnBilling.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBilling.Location = new System.Drawing.Point(0, 102);
+            this.btnBilling.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBilling.Name = "btnBilling";
-            this.btnBilling.Size = new System.Drawing.Size(135, 37);
+            this.btnBilling.Size = new System.Drawing.Size(180, 46);
             this.btnBilling.TabIndex = 3;
             this.btnBilling.Text = "Billing";
             this.btnBilling.UseVisualStyleBackColor = true;
@@ -105,9 +104,9 @@
             this.header.Controls.Add(this.label1);
             this.header.Dock = System.Windows.Forms.DockStyle.Top;
             this.header.Location = new System.Drawing.Point(0, 0);
-            this.header.Margin = new System.Windows.Forms.Padding(2);
+            this.header.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(822, 65);
+            this.header.Size = new System.Drawing.Size(1096, 63);
             this.header.TabIndex = 4;
             // 
             // cmbLanguage
@@ -120,22 +119,21 @@
             "English",
             "Français",
             "Español"});
-            this.cmbLanguage.Location = new System.Drawing.Point(72, 362);
-            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(2);
+            this.cmbLanguage.Location = new System.Drawing.Point(12, 446);
+            this.cmbLanguage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(63, 23);
+            this.cmbLanguage.Size = new System.Drawing.Size(149, 28);
             this.cmbLanguage.TabIndex = 8;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
             // lblLanguage
             // 
             this.lblLanguage.AutoSize = true;
-            this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLanguage.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLanguage.ForeColor = System.Drawing.Color.White;
-            this.lblLanguage.Location = new System.Drawing.Point(6, 365);
-            this.lblLanguage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblLanguage.Location = new System.Drawing.Point(8, 421);
             this.lblLanguage.Name = "lblLanguage";
-            this.lblLanguage.Size = new System.Drawing.Size(62, 15);
+            this.lblLanguage.Size = new System.Drawing.Size(89, 23);
             this.lblLanguage.TabIndex = 7;
             this.lblLanguage.Text = "Language:";
             // 
@@ -149,18 +147,23 @@
             this.sidebar.Controls.Add(this.btnReservations);
             this.sidebar.Controls.Add(this.btnTables);
             this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebar.Location = new System.Drawing.Point(0, 65);
-            this.sidebar.Margin = new System.Windows.Forms.Padding(2);
+            this.sidebar.Location = new System.Drawing.Point(0, 63);
+            this.sidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sidebar.Name = "sidebar";
-            this.sidebar.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.sidebar.Size = new System.Drawing.Size(135, 503);
+            this.sidebar.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.sidebar.Size = new System.Drawing.Size(180, 636);
             this.sidebar.TabIndex = 5;
             // 
             // quitButton
             // 
-            this.quitButton.Location = new System.Drawing.Point(9, 445);
+            this.quitButton.FlatAppearance.BorderSize = 0;
+            this.quitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.quitButton.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.quitButton.ForeColor = System.Drawing.Color.White;
+            this.quitButton.Location = new System.Drawing.Point(0, 562);
+            this.quitButton.Margin = new System.Windows.Forms.Padding(4);
             this.quitButton.Name = "quitButton";
-            this.quitButton.Size = new System.Drawing.Size(87, 23);
+            this.quitButton.Size = new System.Drawing.Size(180, 46);
             this.quitButton.TabIndex = 0;
             this.quitButton.Text = "Quit";
             this.quitButton.UseVisualStyleBackColor = true;
@@ -172,22 +175,23 @@
             this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(244)))), ((int)(((byte)(246)))));
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.ForeColor = System.Drawing.Color.Black;
-            this.mainPanel.Location = new System.Drawing.Point(135, 65);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.mainPanel.Location = new System.Drawing.Point(180, 63);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(687, 503);
+            this.mainPanel.Size = new System.Drawing.Size(916, 636);
             this.mainPanel.TabIndex = 6;
             // 
             // RestoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(822, 568);
+            this.ClientSize = new System.Drawing.Size(1096, 699);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.sidebar);
             this.Controls.Add(this.header);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RestoForm";
             this.Text = "RestoMGR";
             this.header.ResumeLayout(false);

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.reservations = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblPhone = new System.Windows.Forms.Label();
@@ -48,17 +48,13 @@
             this.reservationGrid = new System.Windows.Forms.DataGridView();
             this.headerPanel = new System.Windows.Forms.Panel();
             this.btnClear = new System.Windows.Forms.Button();
-            this.lblSearch = new System.Windows.Forms.Label();
             this.lblTable = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.resTable = new System.Windows.Forms.ComboBox();
             this.resStatus = new System.Windows.Forms.ComboBox();
-            this.resSearch = new System.Windows.Forms.TextBox();
             this.pnlReservationInfo = new System.Windows.Forms.Panel();
             this.lblReservationDetails = new System.Windows.Forms.Label();
             this.lblCustomerInfo = new System.Windows.Forms.Label();
-            this.todayCheckBox = new System.Windows.Forms.CheckBox();
-            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.resPartySize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reservationGrid)).BeginInit();
             this.headerPanel.SuspendLayout();
@@ -206,7 +202,7 @@
             this.btnAddReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddReservation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddReservation.ForeColor = System.Drawing.Color.White;
-            this.btnAddReservation.Location = new System.Drawing.Point(35, 429);
+            this.btnAddReservation.Location = new System.Drawing.Point(12, 382);
             this.btnAddReservation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddReservation.Name = "btnAddReservation";
             this.btnAddReservation.Size = new System.Drawing.Size(130, 55);
@@ -222,7 +218,7 @@
             this.btnEditReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditReservation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditReservation.ForeColor = System.Drawing.Color.White;
-            this.btnEditReservation.Location = new System.Drawing.Point(195, 429);
+            this.btnEditReservation.Location = new System.Drawing.Point(172, 382);
             this.btnEditReservation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditReservation.Name = "btnEditReservation";
             this.btnEditReservation.Size = new System.Drawing.Size(130, 55);
@@ -238,7 +234,7 @@
             this.btnDeleteReservation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteReservation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteReservation.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteReservation.Location = new System.Drawing.Point(355, 429);
+            this.btnDeleteReservation.Location = new System.Drawing.Point(332, 382);
             this.btnDeleteReservation.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDeleteReservation.Name = "btnDeleteReservation";
             this.btnDeleteReservation.Size = new System.Drawing.Size(130, 55);
@@ -253,36 +249,35 @@
             this.reservationGrid.AllowUserToDeleteRows = false;
             this.reservationGrid.AllowUserToResizeColumns = false;
             this.reservationGrid.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.reservationGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.reservationGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.reservationGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.reservationGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.reservationGrid.BackgroundColor = System.Drawing.Color.White;
             this.reservationGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.reservationGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(41)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.reservationGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(41)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.reservationGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.reservationGrid.ColumnHeadersHeight = 33;
             this.reservationGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.reservationGrid.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.reservationGrid.DefaultCellStyle = dataGridViewCellStyle12;
             this.reservationGrid.EnableHeadersVisualStyles = false;
             this.reservationGrid.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.reservationGrid.Location = new System.Drawing.Point(10, 501);
+            this.reservationGrid.Location = new System.Drawing.Point(10, 457);
             this.reservationGrid.Name = "reservationGrid";
             this.reservationGrid.ReadOnly = true;
             this.reservationGrid.RowHeadersVisible = false;
@@ -298,7 +293,7 @@
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(897, 45);
+            this.headerPanel.Size = new System.Drawing.Size(894, 45);
             this.headerPanel.TabIndex = 15;
             // 
             // btnClear
@@ -308,7 +303,7 @@
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(515, 429);
+            this.btnClear.Location = new System.Drawing.Point(492, 382);
             this.btnClear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(130, 55);
@@ -316,16 +311,6 @@
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // lblSearch
-            // 
-            this.lblSearch.AutoSize = true;
-            this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearch.Location = new System.Drawing.Point(12, 64);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(155, 25);
-            this.lblSearch.TabIndex = 17;
-            this.lblSearch.Text = "Search (Name/ID):";
             // 
             // lblTable
             // 
@@ -373,16 +358,6 @@
             this.resStatus.Size = new System.Drawing.Size(207, 28);
             this.resStatus.TabIndex = 21;
             // 
-            // resSearch
-            // 
-            this.resSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.resSearch.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resSearch.Location = new System.Drawing.Point(195, 62);
-            this.resSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.resSearch.Name = "resSearch";
-            this.resSearch.Size = new System.Drawing.Size(207, 27);
-            this.resSearch.TabIndex = 22;
-            // 
             // pnlReservationInfo
             // 
             this.pnlReservationInfo.BackColor = System.Drawing.Color.White;
@@ -402,7 +377,7 @@
             this.pnlReservationInfo.Controls.Add(this.resDate);
             this.pnlReservationInfo.Controls.Add(this.lblTime);
             this.pnlReservationInfo.Controls.Add(this.resTimeSlot);
-            this.pnlReservationInfo.Location = new System.Drawing.Point(12, 114);
+            this.pnlReservationInfo.Location = new System.Drawing.Point(12, 64);
             this.pnlReservationInfo.Name = "pnlReservationInfo";
             this.pnlReservationInfo.Size = new System.Drawing.Size(866, 295);
             this.pnlReservationInfo.TabIndex = 23;
@@ -427,46 +402,14 @@
             this.lblCustomerInfo.TabIndex = 22;
             this.lblCustomerInfo.Text = "CUSTOMER INFO:";
             // 
-            // todayCheckBox
-            // 
-            this.todayCheckBox.AutoSize = true;
-            this.todayCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.todayCheckBox.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.todayCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.todayCheckBox.Location = new System.Drawing.Point(437, 64);
-            this.todayCheckBox.Name = "todayCheckBox";
-            this.todayCheckBox.Size = new System.Drawing.Size(233, 27);
-            this.todayCheckBox.TabIndex = 24;
-            this.todayCheckBox.Text = "Show Today\'s Reservations";
-            this.todayCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.btnRefresh.FlatAppearance.BorderSize = 0;
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.Location = new System.Drawing.Point(780, 58);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(98, 41);
-            this.btnRefresh.TabIndex = 25;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = false;
-            // 
             // ReservationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(231)))), ((int)(((byte)(235)))));
-            this.ClientSize = new System.Drawing.Size(897, 818);
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.todayCheckBox);
+            this.ClientSize = new System.Drawing.Size(894, 767);
             this.Controls.Add(this.pnlReservationInfo);
-            this.Controls.Add(this.resSearch);
-            this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.headerPanel);
             this.Controls.Add(this.reservationGrid);
@@ -483,7 +426,6 @@
             this.pnlReservationInfo.ResumeLayout(false);
             this.pnlReservationInfo.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -506,16 +448,12 @@
         private System.Windows.Forms.DataGridView reservationGrid;
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.Label lblTable;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.ComboBox resTable;
         private System.Windows.Forms.ComboBox resStatus;
-        private System.Windows.Forms.TextBox resSearch;
         private System.Windows.Forms.Panel pnlReservationInfo;
         private System.Windows.Forms.Label lblCustomerInfo;
         private System.Windows.Forms.Label lblReservationDetails;
-        private System.Windows.Forms.CheckBox todayCheckBox;
-        private System.Windows.Forms.Button btnRefresh;
     }
 }
