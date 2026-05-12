@@ -77,7 +77,11 @@ namespace RSBM_RestaurantMGR
             catch (Exception ex)
             {
                 // If language loading fails, show error but continue
-                MessageBox.Show(string.Format("Language loading error: {0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    string.Format("{0}\n\n{1}", LanguageManager.GetString("Message_LanguageLoadError"), ex.Message),
+                    LanguageManager.GetString("Message_ErrorTitle"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 

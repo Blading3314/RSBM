@@ -228,6 +228,57 @@
   <data name="Message_ConfirmDeleteTitle" xml:space="preserve">
     <value>Confirmer la Suppression</value>
   </data>
+  <data name="Message_ErrorTitle" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="Message_LanguageLoadError" xml:space="preserve">
+    <value>Erreur de chargement de la langue.</value>
+  </data>
+  <data name="Message_ReservationLoadError" xml:space="preserve">
+    <value>Impossible de charger les réservations.</value>
+  </data>
+  <data name="Message_CustomerNameRequired" xml:space="preserve">
+    <value>Veuillez entrer le nom du client.</value>
+  </data>
+  <data name="Message_PhoneRequired" xml:space="preserve">
+    <value>Veuillez entrer un numéro de téléphone.</value>
+  </data>
+  <data name="Message_InvalidPhone" xml:space="preserve">
+    <value>Numéro de téléphone invalide.</value>
+  </data>
+  <data name="Message_SelectReservationTime" xml:space="preserve">
+    <value>Veuillez sélectionner une heure de réservation.</value>
+  </data>
+  <data name="Message_SelectReservationStatus" xml:space="preserve">
+    <value>Veuillez sélectionner un statut de réservation.</value>
+  </data>
+  <data name="Message_TableNotFound" xml:space="preserve">
+    <value>La table sélectionnée est introuvable.</value>
+  </data>
+  <data name="Message_PartySizeExceedsCapacity" xml:space="preserve">
+    <value>La taille du groupe dépasse la capacité de la table ({0} places).</value>
+  </data>
+  <data name="Message_TableAlreadyReserved" xml:space="preserve">
+    <value>Cette table est déjà réservée à cette heure.</value>
+  </data>
+  <data name="Message_ReservationAddError" xml:space="preserve">
+    <value>Impossible d'ajouter la réservation.</value>
+  </data>
+  <data name="Message_ReservationNotFound" xml:space="preserve">
+    <value>La réservation est introuvable.</value>
+  </data>
+  <data name="Message_ReservationUpdateError" xml:space="preserve">
+    <value>Impossible de mettre à jour la réservation.</value>
+  </data>
+  <data name="Message_ReservationDeleteError" xml:space="preserve">
+    <value>Impossible de supprimer la réservation.</value>
+  </data>
+  <data name="Message_ReservationSelectionError" xml:space="preserve">
+    <value>Impossible de charger la réservation sélectionnée.</value>
+  </data>
+  <data name="Message_NoAvailableTables" xml:space="preserve">
+    <value>Aucune table disponible.</value>
+  </data>
   <data name="TableForm_Title" xml:space="preserve">
     <value>Gestion Tables</value>
   </data>
@@ -347,6 +398,33 @@
   </data>
   <data name="BillingForm_GenerateBill" xml:space="preserve">
     <value>Générer Facture</value>
+  </data>
+  <data name="Payment_Cash" xml:space="preserve">
+    <value>Espèces</value>
+  </data>
+  <data name="Payment_Debit" xml:space="preserve">
+    <value>Débit</value>
+  </data>
+  <data name="Payment_Credit" xml:space="preserve">
+    <value>Crédit</value>
+  </data>
+  <data name="Message_BillReservationLoadError" xml:space="preserve">
+    <value>Impossible de charger les réservations pour la facturation.</value>
+  </data>
+  <data name="Message_SelectPaymentMethod" xml:space="preserve">
+    <value>Veuillez sélectionner une méthode de paiement.</value>
+  </data>
+  <data name="Message_InvalidReservation" xml:space="preserve">
+    <value>Réservation sélectionnée invalide.</value>
+  </data>
+  <data name="Message_InvalidBillTotal" xml:space="preserve">
+    <value>Impossible de calculer le total de la facture.</value>
+  </data>
+  <data name="Message_BillSaved" xml:space="preserve">
+    <value>Facture enregistrée avec succès.</value>
+  </data>
+  <data name="Message_BillSaveError" xml:space="preserve">
+    <value>Impossible d'enregistrer la facture.</value>
   </data>
   <data name="Message_NoChangesMade" xml:space="preserve">
     <value>Aucun changement n'a été effectué</value>

@@ -29,22 +29,29 @@ namespace RSBM_RestaurantMGR
         }
         private void LoadReservationIDs()
         {
-            tableIdComboBox.Items.Clear();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                string query = "SELECT ReservationID FROM Reservations";
+                tableIdComboBox.Items.Clear();
 
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                conn.Open();
-
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    tableIdComboBox.Items.Add(reader["ReservationID"].ToString());
+                    string query = "SELECT ReservationID FROM Reservations ORDER BY ReservationID";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    conn.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        tableIdComboBox.Items.Add(reader["ReservationID"].ToString());
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Message_BillReservationLoadError", ex);
             }
         }
 
@@ -173,46 +180,87 @@ namespace RSBM_RestaurantMGR
 
             if (paymentMethodComboBox.SelectedIndex == -1)
             {
-                MessageBox.Show("Select payment method");
+                ShowMessage("Message_SelectPaymentMethod");
                 return;
             }
 
             if (tableIdComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Select a reservation");
+                ShowMessage("Message_SelectReservation");
                 return;
             }
 
-            int reservationID =
-                int.Parse(tableIdComboBox.SelectedItem.ToString());
+            int reservationID;
+            if (!int.TryParse(tableIdComboBox.SelectedItem.ToString(), out reservationID))
+            {
+                ShowMessage("Message_InvalidReservation");
+                return;
+            }
 
             ComboBoxItem paymentItem =
                 paymentMethodComboBox.SelectedItem as ComboBoxItem;
 
-            string paymentMethod = paymentItem.Value;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            if (paymentItem == null)
             {
-                string query =
-                    @"INSERT INTO Bills
-            (ReservationID, SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
-            VALUES
-            (@ReservationID, @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@ReservationID", reservationID);
-                cmd.Parameters.AddWithValue("@SubTotal", decimal.Parse(subtotalTextBox.Text));
-                cmd.Parameters.AddWithValue("@TaxAmount", numericUpDown1.Value);
-                cmd.Parameters.AddWithValue("@TotalAmount", decimal.Parse(totalTextBox.Text));
-                cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
-                cmd.Parameters.AddWithValue("@PaymentStatus", "Paid");
-
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                ShowMessage("Message_SelectPaymentMethod");
+                return;
             }
 
-            MessageBox.Show("Bill saved successfully!");
+            string paymentMethod = paymentItem.Value;
+
+            decimal subtotal;
+            decimal total;
+
+            if (!decimal.TryParse(subtotalTextBox.Text, out subtotal) ||
+                !decimal.TryParse(totalTextBox.Text, out total))
+            {
+                ShowMessage("Message_InvalidBillTotal");
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query =
+                        @"INSERT INTO Bills
+                (ReservationID, SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
+                VALUES
+                (@ReservationID, @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    cmd.Parameters.AddWithValue("@ReservationID", reservationID);
+                    cmd.Parameters.AddWithValue("@SubTotal", subtotal);
+                    cmd.Parameters.AddWithValue("@TaxAmount", numericUpDown1.Value);
+                    cmd.Parameters.AddWithValue("@TotalAmount", total);
+                    cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
+                    cmd.Parameters.AddWithValue("@PaymentStatus", "Paid");
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                ShowMessage("Message_BillSaved");
+            }
+            catch (Exception ex)
+            {
+                ShowError("Message_BillSaveError", ex);
+            }
+        }
+
+        private void ShowMessage(string resourceKey)
+        {
+            MessageBox.Show(LanguageManager.GetString(resourceKey));
+        }
+
+        private void ShowError(string resourceKey, Exception ex)
+        {
+            MessageBox.Show(
+                string.Format("{0}\n\n{1}", LanguageManager.GetString(resourceKey), ex.Message),
+                LanguageManager.GetString("Message_ErrorTitle"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
     }
 
