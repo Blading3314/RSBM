@@ -21,10 +21,8 @@ namespace RSBM_RestaurantMGR
         public BillingForm()
         {
             InitializeComponent();
-            LoadPaymentMethods();
             ApplyLanguage();
             LoadBills();
-            LoadPaymentStatus();
         }
 
         public void ApplyLanguage()
@@ -33,6 +31,9 @@ namespace RSBM_RestaurantMGR
             string selectedStatus = GetSelectedValue(Status);
 
             LanguageManager.ApplyLanguageToForm(this);
+
+            LoadPaymentMethods();
+            LoadPaymentStatus();
 
             SelectComboBoxValue(paymentMethodComboBox, selectedPayment);
             SelectComboBoxValue(Status, selectedStatus);
@@ -63,11 +64,11 @@ namespace RSBM_RestaurantMGR
             Status.Items.Clear();
 
             Status.Items.Add(new ComboBoxItem(
-                LanguageManager.GetString("status_paid"),
+                LanguageManager.GetString("Paid"),
                 "Paid"));
 
             Status.Items.Add(new ComboBoxItem(
-                LanguageManager.GetString("status_waiting"),
+                LanguageManager.GetString("Waiting"),
                 "Waiting"));
 
             Status.EndUpdate();
@@ -186,7 +187,20 @@ namespace RSBM_RestaurantMGR
         }
         private void btnUpdateStatus_Click(object sender, EventArgs e)
         {
-            if (dataGridBill.SelectedRows.Count == 0)
+            // Get BillID from selected row
+            int billID = 0;
+            if (!string.IsNullOrEmpty(selectedBillId.Text))
+            {
+                int.TryParse(selectedBillId.Text, out billID);
+            }
+            else if (dataGridBill.SelectedRows.Count > 0)
+            {
+                billID = Convert.ToInt32(
+                    dataGridBill.SelectedRows[0]
+                    .Cells["BillID"].Value);
+            }
+
+            if (billID == 0)
             {
                 MessageBox.Show("Please select a bill.");
                 return;
@@ -198,22 +212,16 @@ namespace RSBM_RestaurantMGR
                 return;
             }
 
-            // Get BillID from selected row
-            int billID = 0;
-            if (!string.IsNullOrEmpty(selectedBillId.Text))
-            {
-                int.TryParse(selectedBillId.Text, out billID);
-            }
-            if (billID == 0)
-            {
-                billID = Convert.ToInt32(
-                    dataGridBill.SelectedRows[0]
-                    .Cells["BillID"].Value);
-            }
-
             // Get selected status
-            string paymentStatus =
-                Status.SelectedItem.ToString();
+            string paymentStatus = string.Empty;
+            if (Status.SelectedItem is ComboBoxItem item)
+            {
+                paymentStatus = item.Value;
+            }
+            else
+            {
+                paymentStatus = Status.SelectedItem.ToString();
+            }
 
             using (SqlConnection conn =
                 new SqlConnection(connectionString))
@@ -234,6 +242,10 @@ namespace RSBM_RestaurantMGR
             }
 
             MessageBox.Show("Payment status updated!");
+
+            selectedBillId.Clear();
+            Status.SelectedIndex = -1;
+            dataGridBill.ClearSelection();
 
             LoadBills();
         }
