@@ -22,37 +22,9 @@ namespace RSBM_RestaurantMGR
             InitializeComponent();
             LoadPaymentMethods();
             ApplyLanguage();
-            LoadReservationIDs();
             LoadBills();
         }
-        private void LoadReservationIDs()
-        {
-            try
-            {
-                tableIdComboBox.Items.Clear();
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    string query = "SELECT ReservationID FROM Reservations ORDER BY ReservationID";
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    conn.Open();
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        tableIdComboBox.Items.Add(reader["ReservationID"].ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("Message_BillReservationLoadError", ex);
-            }
-        }
-
+      
         public void ApplyLanguage()
         {
             string selectedPayment =
@@ -198,19 +170,6 @@ namespace RSBM_RestaurantMGR
                 return;
             }
 
-            if (tableIdComboBox.SelectedItem == null)
-            {
-                ShowMessage("Message_SelectReservation");
-                return;
-            }
-
-            int reservationID;
-            if (!int.TryParse(tableIdComboBox.SelectedItem.ToString(), out reservationID))
-            {
-                ShowMessage("Message_InvalidReservation");
-                return;
-            }
-
             ComboBoxItem paymentItem =
                 paymentMethodComboBox.SelectedItem as ComboBoxItem;
 
@@ -238,13 +197,12 @@ namespace RSBM_RestaurantMGR
                 {
                     string query =
                         @"INSERT INTO Bills
-                (ReservationID, SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
+                ( SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
                 VALUES
-                (@ReservationID, @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
+                ( @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
-                    cmd.Parameters.AddWithValue("@ReservationID", reservationID);
                     cmd.Parameters.AddWithValue("@SubTotal", subtotal);
                     cmd.Parameters.AddWithValue("@TaxAmount", numericUpDown1.Value);
                     cmd.Parameters.AddWithValue("@TotalAmount", total);
