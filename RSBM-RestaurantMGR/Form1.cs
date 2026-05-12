@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ namespace RSBM_RestaurantMGR
             InitializeComponent();
             InitializeLanguage();
             ApplyLanguage();
+            OpenChildForm(new Dashboard());
         }
 
         private void InitializeLanguage()
@@ -227,6 +229,17 @@ namespace RSBM_RestaurantMGR
 
                 return dialog.ShowDialog(this);
             }
+        }
+
+        private void dashboardTimer_Tick(object sender, EventArgs e)
+        {
+            lblDate.Text = DateTime.Now.ToString("MMMM dd, yyyy");
+            lblTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Dashboard());
         }
     }
 }

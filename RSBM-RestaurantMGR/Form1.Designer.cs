@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.btnReservations = new System.Windows.Forms.Button();
             this.btnTables = new System.Windows.Forms.Button();
@@ -38,6 +39,15 @@
             this.sidebar = new System.Windows.Forms.Panel();
             this.quitButton = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.lblDashboard = new System.Windows.Forms.Label();
+            this.lblDateTitle = new System.Windows.Forms.Label();
+            this.lblTimeDate = new System.Windows.Forms.Label();
+            this.lblCustomerTitle = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblCustomerCount = new System.Windows.Forms.Label();
+            this.dashboardTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnDashboard = new System.Windows.Forms.Button();
             this.header.SuspendLayout();
             this.sidebar.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +69,7 @@
             this.btnReservations.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReservations.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReservations.ForeColor = System.Drawing.Color.White;
-            this.btnReservations.Location = new System.Drawing.Point(0, 0);
+            this.btnReservations.Location = new System.Drawing.Point(0, 64);
             this.btnReservations.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReservations.Name = "btnReservations";
             this.btnReservations.Size = new System.Drawing.Size(180, 46);
@@ -74,7 +84,7 @@
             this.btnTables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTables.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTables.ForeColor = System.Drawing.Color.White;
-            this.btnTables.Location = new System.Drawing.Point(0, 50);
+            this.btnTables.Location = new System.Drawing.Point(0, 114);
             this.btnTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTables.Name = "btnTables";
             this.btnTables.Size = new System.Drawing.Size(180, 46);
@@ -89,7 +99,7 @@
             this.btnBilling.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBilling.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBilling.ForeColor = System.Drawing.Color.White;
-            this.btnBilling.Location = new System.Drawing.Point(0, 102);
+            this.btnBilling.Location = new System.Drawing.Point(0, 164);
             this.btnBilling.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBilling.Name = "btnBilling";
             this.btnBilling.Size = new System.Drawing.Size(180, 46);
@@ -140,6 +150,7 @@
             // sidebar
             // 
             this.sidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(41)))), ((int)(((byte)(55)))));
+            this.sidebar.Controls.Add(this.btnDashboard);
             this.sidebar.Controls.Add(this.quitButton);
             this.sidebar.Controls.Add(this.lblLanguage);
             this.sidebar.Controls.Add(this.cmbLanguage);
@@ -181,6 +192,70 @@
             this.mainPanel.Size = new System.Drawing.Size(916, 636);
             this.mainPanel.TabIndex = 6;
             // 
+            // lblDashboard
+            // 
+            this.lblDashboard.Location = new System.Drawing.Point(0, 0);
+            this.lblDashboard.Name = "lblDashboard";
+            this.lblDashboard.Size = new System.Drawing.Size(100, 23);
+            this.lblDashboard.TabIndex = 0;
+            // 
+            // lblDateTitle
+            // 
+            this.lblDateTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblDateTitle.Name = "lblDateTitle";
+            this.lblDateTitle.Size = new System.Drawing.Size(100, 23);
+            this.lblDateTitle.TabIndex = 0;
+            // 
+            // lblTimeDate
+            // 
+            this.lblTimeDate.Location = new System.Drawing.Point(0, 0);
+            this.lblTimeDate.Name = "lblTimeDate";
+            this.lblTimeDate.Size = new System.Drawing.Size(100, 23);
+            this.lblTimeDate.TabIndex = 0;
+            // 
+            // lblCustomerTitle
+            // 
+            this.lblCustomerTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblCustomerTitle.Name = "lblCustomerTitle";
+            this.lblCustomerTitle.Size = new System.Drawing.Size(100, 23);
+            this.lblCustomerTitle.TabIndex = 0;
+            // 
+            // lblDate
+            // 
+            this.lblDate.Location = new System.Drawing.Point(0, 0);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(100, 23);
+            this.lblDate.TabIndex = 0;
+            // 
+            // lblTime
+            // 
+            this.lblTime.Location = new System.Drawing.Point(0, 0);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(100, 23);
+            this.lblTime.TabIndex = 0;
+            // 
+            // lblCustomerCount
+            // 
+            this.lblCustomerCount.Location = new System.Drawing.Point(0, 0);
+            this.lblCustomerCount.Name = "lblCustomerCount";
+            this.lblCustomerCount.Size = new System.Drawing.Size(100, 23);
+            this.lblCustomerCount.TabIndex = 0;
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.FlatAppearance.BorderSize = 0;
+            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDashboard.ForeColor = System.Drawing.Color.White;
+            this.btnDashboard.Location = new System.Drawing.Point(0, 14);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(180, 46);
+            this.btnDashboard.TabIndex = 9;
+            this.btnDashboard.Text = "Main";
+            this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            // 
             // RestoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -214,6 +289,15 @@
         private System.Windows.Forms.ComboBox cmbLanguage;
         private System.Windows.Forms.Label lblLanguage;
         private System.Windows.Forms.Button quitButton;
+        private System.Windows.Forms.Label lblDashboard;
+        private System.Windows.Forms.Label lblDateTitle;
+        private System.Windows.Forms.Label lblTimeDate;
+        private System.Windows.Forms.Label lblCustomerTitle;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.Label lblCustomerCount;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Timer dashboardTimer;
+        private System.Windows.Forms.Button btnDashboard;
     }
 }
 
