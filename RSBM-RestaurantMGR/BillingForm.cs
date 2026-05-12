@@ -23,6 +23,7 @@ namespace RSBM_RestaurantMGR
             LoadPaymentMethods();
             ApplyLanguage();
             LoadBills();
+            LoadPaymentStatus();
         }
       
         public void ApplyLanguage()
@@ -57,6 +58,15 @@ namespace RSBM_RestaurantMGR
                 new ComboBoxItem(
                     LanguageManager.GetString("Payment_Credit"),
                     "Credit"));
+        }
+        private void LoadPaymentStatus()
+        {
+            Status.Items.Clear();
+
+            Status.Items.Add("Paid");
+            Status.Items.Add("Waiting");
+
+            Status.SelectedIndex = 0;
         }
 
         private static string GetSelectedValue(
@@ -122,26 +132,39 @@ namespace RSBM_RestaurantMGR
             if (people <= 0)
                 return;
 
+            // BASE PRICE
             decimal subTotal = 50 * people;
 
+            // EXTRAS
             if (drinksCheckBox.Checked)
                 subTotal += 5 * people;
 
             if (premiumCheckBox.Checked)
                 subTotal += 25 * people;
 
-            decimal tipPercent = numericUpDown1.Value; 
+            // AUTO TAX 15%
+            decimal taxAmount = subTotal * 0.15m;
 
-            decimal tipAmount = subTotal * (tipPercent / 100);
+            // USER TIP %
+            decimal tipPercent = numericUpDown1.Value;
 
-            decimal total = subTotal + tipAmount;
+            decimal tipAmount =
+                subTotal * (tipPercent / 100);
 
-            
-            subtotalTextBox.Text = subTotal.ToString("0.00");
-            totalTextBox.Text = total.ToString("0.00");
+            // FINAL TOTAL
+            decimal total =
+                subTotal + taxAmount + tipAmount;
 
+            // UI
+            subtotalTextBox.Text =
+                subTotal.ToString("0.00");
+
+            totalTextBox.Text =
+                total.ToString("0.00");
+
+            // PER PERSON
             pricePerPersonTextBox.Text =
-                (subTotal / people).ToString("0.00");
+                (total / people).ToString("0.00");
         }
         private void LoadBills()
         {
@@ -162,6 +185,7 @@ namespace RSBM_RestaurantMGR
 
         private void btnGenerateBill_Click(object sender, EventArgs e)
         {
+
             CalculateBill();
 
             if (paymentMethodComboBox.SelectedIndex == -1)
@@ -184,12 +208,14 @@ namespace RSBM_RestaurantMGR
             decimal subtotal;
             decimal total;
 
+
             if (!decimal.TryParse(subtotalTextBox.Text, out subtotal) ||
                 !decimal.TryParse(totalTextBox.Text, out total))
             {
                 ShowMessage("Message_InvalidBillTotal");
                 return;
             }
+            decimal taxAmount = subtotal * 0.15m;
 
             try
             {
@@ -204,7 +230,7 @@ namespace RSBM_RestaurantMGR
                     SqlCommand cmd = new SqlCommand(query, conn);
 
                     cmd.Parameters.AddWithValue("@SubTotal", subtotal);
-                    cmd.Parameters.AddWithValue("@TaxAmount", numericUpDown1.Value);
+                    cmd.Parameters.AddWithValue("@TaxAmount",taxAmount);
                     cmd.Parameters.AddWithValue("@TotalAmount", total);
                     cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
                     cmd.Parameters.AddWithValue("@PaymentStatus", "Paid");
@@ -239,8 +265,6 @@ namespace RSBM_RestaurantMGR
         {
 
         }
-
-
     }
 
 }
