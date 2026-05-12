@@ -21,6 +21,8 @@ namespace RSBM_RestaurantMGR
 
             resDate.Format = DateTimePickerFormat.Custom;
             resDate.CustomFormat = "MMM dd, yyyy";
+            resDate.MinDate = DateTime.Today;
+            resDate.MaxDate = DateTime.Today.AddMonths(2);
 
             LoadTimeSlots();
             LoadStatusOptions();
