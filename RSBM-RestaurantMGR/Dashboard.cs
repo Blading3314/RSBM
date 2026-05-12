@@ -10,11 +10,21 @@ namespace RSBM_RestaurantMGR
         @"Data Source=(LocalDB)\MSSQLLocalDB;
         Initial Catalog=RestaurantDB;
         Integrated Security=True";
+
         public Dashboard()
         {
             InitializeComponent();
+            ApplyLanguage();
             LoadCustomerCount();
+        }
 
+        public void ApplyLanguage()
+        {
+            LanguageManager.ApplyLanguageToForm(this);
+
+            lblDateTitle.Text = LanguageManager.GetString("Dashboard_Date");
+            lblTimeDate.Text = LanguageManager.GetString("Dashboard_Time");
+            lblCustomerTitle.Text = LanguageManager.GetString("Dashboard_CustomerCount");
         }
 
         private void dashboardTimer_Tick(object sender, EventArgs e)

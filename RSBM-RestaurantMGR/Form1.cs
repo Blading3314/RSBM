@@ -48,15 +48,12 @@ namespace RSBM_RestaurantMGR
         {
             try
             {
-               
                 LanguageManager.ApplyLanguageToForm(this);
-                
-                
+
                 if (mainPanel.Controls.Count > 0 && mainPanel.Controls[0] is Form)
                 {
                     Form childForm = (Form)mainPanel.Controls[0];
-                    
-                  
+
                     if (childForm is ReservationForm)
                     {
                         ((ReservationForm)childForm).ApplyLanguage();
@@ -69,16 +66,18 @@ namespace RSBM_RestaurantMGR
                     {
                         ((BillingForm)childForm).ApplyLanguage();
                     }
+                    else if (childForm is Dashboard)
+                    {
+                        ((Dashboard)childForm).ApplyLanguage();
+                    }
                     else
                     {
-                        // Fallback to generic language application
                         LanguageManager.ApplyLanguageToForm(childForm);
                     }
                 }
             }
             catch (Exception ex)
             {
-                // If language loading fails, show error but continue
                 MessageBox.Show(
                     string.Format("{0}\n\n{1}", LanguageManager.GetString("Message_LanguageLoadError"), ex.Message),
                     LanguageManager.GetString("Message_ErrorTitle"),
@@ -89,19 +88,15 @@ namespace RSBM_RestaurantMGR
 
         private void OpenChildForm(Form childForm)
         {
-           
             mainPanel.Controls.Clear();
 
-           
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
-            
             mainPanel.Controls.Add(childForm);
             mainPanel.Tag = childForm;
 
-           
             if (childForm is ReservationForm)
             {
                 ((ReservationForm)childForm).ApplyLanguage();
@@ -114,9 +109,12 @@ namespace RSBM_RestaurantMGR
             {
                 ((BillingForm)childForm).ApplyLanguage();
             }
+            else if (childForm is Dashboard)
+            {
+                ((Dashboard)childForm).ApplyLanguage();
+            }
             else
             {
-                // Fallback to generic language application
                 LanguageManager.ApplyLanguageToForm(childForm);
             }
 
@@ -134,24 +132,22 @@ namespace RSBM_RestaurantMGR
             string cultureCode = "en";
             switch (cmbLanguage.SelectedIndex)
             {
-                case 1: // French
+                case 1:
                     cultureCode = "fr";
                     break;
-                case 2: // Spanish
+                case 2:
                     cultureCode = "es";
                     break;
-                default: // English
+                default:
                     cultureCode = "en";
                     break;
             }
 
-           
             LanguageManager.SetCulture(cultureCode);
-            
+
             Properties.Settings.Default.Language = cultureCode;
             Properties.Settings.Default.Save();
 
-            
             ApplyLanguage();
         }
 
@@ -170,9 +166,13 @@ namespace RSBM_RestaurantMGR
             OpenChildForm(new BillingForm());
         }
 
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Dashboard());
+        }
+
         private void quitButton_Click(object sender, EventArgs e)
         {
-           
             string message = GetLocalizedText("MainForm_QuitConfirmation", "Are you sure you want to quit?");
             string caption = GetLocalizedText("MainForm_Quit", "Quit");
             string yesText = GetLocalizedText("MainForm_Yes", "Yes");
@@ -235,11 +235,6 @@ namespace RSBM_RestaurantMGR
         {
             lblDate.Text = DateTime.Now.ToString("MMMM dd, yyyy");
             lblTime.Text = DateTime.Now.ToString("hh:mm:ss tt");
-        }
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new Dashboard());
         }
     }
 }

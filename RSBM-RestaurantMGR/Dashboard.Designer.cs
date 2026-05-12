@@ -66,8 +66,9 @@
             this.dashboardPanel.Controls.Add(this.lblDashboard);
             this.dashboardPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.dashboardPanel.Location = new System.Drawing.Point(0, 0);
+            this.dashboardPanel.Margin = new System.Windows.Forms.Padding(2);
             this.dashboardPanel.Name = "dashboardPanel";
-            this.dashboardPanel.Size = new System.Drawing.Size(900, 55);
+            this.dashboardPanel.Size = new System.Drawing.Size(675, 45);
             this.dashboardPanel.TabIndex = 0;
             // 
             // lblDashboard
@@ -75,9 +76,10 @@
             this.lblDashboard.AutoSize = true;
             this.lblDashboard.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblDashboard.ForeColor = System.Drawing.Color.White;
-            this.lblDashboard.Location = new System.Drawing.Point(331, 9);
+            this.lblDashboard.Location = new System.Drawing.Point(248, 7);
+            this.lblDashboard.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDashboard.Name = "lblDashboard";
-            this.lblDashboard.Size = new System.Drawing.Size(157, 37);
+            this.lblDashboard.Size = new System.Drawing.Size(126, 30);
             this.lblDashboard.TabIndex = 0;
             this.lblDashboard.Text = "Dashboard";
             // 
@@ -87,18 +89,20 @@
             this.datePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.datePanel.Controls.Add(this.lblDateTitle);
             this.datePanel.Controls.Add(this.lblDate);
-            this.datePanel.Location = new System.Drawing.Point(20, 80);
+            this.datePanel.Location = new System.Drawing.Point(21, 164);
+            this.datePanel.Margin = new System.Windows.Forms.Padding(2);
             this.datePanel.Name = "datePanel";
-            this.datePanel.Size = new System.Drawing.Size(250, 120);
+            this.datePanel.Size = new System.Drawing.Size(188, 98);
             this.datePanel.TabIndex = 1;
             // 
             // lblDateTitle
             // 
             this.lblDateTitle.AutoSize = true;
             this.lblDateTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblDateTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblDateTitle.Location = new System.Drawing.Point(8, 8);
+            this.lblDateTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDateTitle.Name = "lblDateTitle";
-            this.lblDateTitle.Size = new System.Drawing.Size(133, 28);
+            this.lblDateTitle.Size = new System.Drawing.Size(107, 21);
             this.lblDateTitle.TabIndex = 0;
             this.lblDateTitle.Text = "Today\'s Date";
             // 
@@ -106,9 +110,10 @@
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblDate.Location = new System.Drawing.Point(10, 60);
+            this.lblDate.Location = new System.Drawing.Point(8, 49);
+            this.lblDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(0, 25);
+            this.lblDate.Size = new System.Drawing.Size(0, 20);
             this.lblDate.TabIndex = 1;
             // 
             // timePanel
@@ -117,18 +122,20 @@
             this.timePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.timePanel.Controls.Add(this.lblTimeDate);
             this.timePanel.Controls.Add(this.lblTime);
-            this.timePanel.Location = new System.Drawing.Point(310, 80);
+            this.timePanel.Location = new System.Drawing.Point(244, 164);
+            this.timePanel.Margin = new System.Windows.Forms.Padding(2);
             this.timePanel.Name = "timePanel";
-            this.timePanel.Size = new System.Drawing.Size(250, 120);
+            this.timePanel.Size = new System.Drawing.Size(188, 98);
             this.timePanel.TabIndex = 2;
             // 
             // lblTimeDate
             // 
             this.lblTimeDate.AutoSize = true;
             this.lblTimeDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTimeDate.Location = new System.Drawing.Point(10, 10);
+            this.lblTimeDate.Location = new System.Drawing.Point(8, 8);
+            this.lblTimeDate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTimeDate.Name = "lblTimeDate";
-            this.lblTimeDate.Size = new System.Drawing.Size(136, 28);
+            this.lblTimeDate.Size = new System.Drawing.Size(109, 21);
             this.lblTimeDate.TabIndex = 0;
             this.lblTimeDate.Text = "Current Time";
             // 
@@ -136,9 +143,10 @@
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblTime.Location = new System.Drawing.Point(10, 60);
+            this.lblTime.Location = new System.Drawing.Point(8, 49);
+            this.lblTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(0, 25);
+            this.lblTime.Size = new System.Drawing.Size(0, 20);
             this.lblTime.TabIndex = 1;
             // 
             // customerPanel
@@ -147,18 +155,20 @@
             this.customerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.customerPanel.Controls.Add(this.lblCustomerTitle);
             this.customerPanel.Controls.Add(this.lblCustomerCount);
-            this.customerPanel.Location = new System.Drawing.Point(600, 80);
+            this.customerPanel.Location = new System.Drawing.Point(466, 164);
+            this.customerPanel.Margin = new System.Windows.Forms.Padding(2);
             this.customerPanel.Name = "customerPanel";
-            this.customerPanel.Size = new System.Drawing.Size(250, 120);
+            this.customerPanel.Size = new System.Drawing.Size(188, 98);
             this.customerPanel.TabIndex = 3;
             // 
             // lblCustomerTitle
             // 
             this.lblCustomerTitle.AutoSize = true;
             this.lblCustomerTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblCustomerTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblCustomerTitle.Location = new System.Drawing.Point(8, 8);
+            this.lblCustomerTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerTitle.Name = "lblCustomerTitle";
-            this.lblCustomerTitle.Size = new System.Drawing.Size(173, 28);
+            this.lblCustomerTitle.Size = new System.Drawing.Size(140, 21);
             this.lblCustomerTitle.TabIndex = 0;
             this.lblCustomerTitle.Text = "Customers Today";
             // 
@@ -166,9 +176,10 @@
             // 
             this.lblCustomerCount.AutoSize = true;
             this.lblCustomerCount.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblCustomerCount.Location = new System.Drawing.Point(10, 60);
+            this.lblCustomerCount.Location = new System.Drawing.Point(8, 49);
+            this.lblCustomerCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCustomerCount.Name = "lblCustomerCount";
-            this.lblCustomerCount.Size = new System.Drawing.Size(22, 25);
+            this.lblCustomerCount.Size = new System.Drawing.Size(17, 20);
             this.lblCustomerCount.TabIndex = 1;
             this.lblCustomerCount.Text = "0";
             // 
@@ -180,15 +191,16 @@
             // 
             // Dashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(900, 500);
+            this.ClientSize = new System.Drawing.Size(675, 406);
             this.Controls.Add(this.dashboardPanel);
             this.Controls.Add(this.datePanel);
             this.Controls.Add(this.timePanel);
             this.Controls.Add(this.customerPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Dashboard";
             this.Text = "Dashboard";
             this.dashboardPanel.ResumeLayout(false);

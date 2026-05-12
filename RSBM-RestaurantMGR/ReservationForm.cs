@@ -519,7 +519,6 @@ namespace RSBM_RestaurantMGR
             catch (Exception ex)
             {
                 ClearForm();
-
                 ShowError("Message_ReservationSelectionError", ex);
             }
         }

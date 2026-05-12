@@ -377,7 +377,7 @@ namespace RSBM_RestaurantMGR
                 return;
             }
 
-            DialogResult result = MessageBox.Show($"Are you sure you want to delete Bill ID: {billID}?", "Delete Bill", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(string.Format("Are you sure you want to delete Bill ID: {0}?", billID), "Delete Bill", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {

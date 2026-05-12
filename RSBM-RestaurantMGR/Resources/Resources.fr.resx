@@ -189,6 +189,15 @@
   <data name="ReservationForm_Clear" xml:space="preserve">
     <value>Effacer</value>
   </data>
+  <data name="Dashboard_CustomerCount" xml:space="preserve">
+    <value>Nombre de Clients</value>
+  </data>
+  <data name="Dashboard_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Dashboard_Time" xml:space="preserve">
+    <value>Heure</value>
+  </data>
   <data name="ReservationForm_Refresh" xml:space="preserve">
     <value>Actualiser</value>
   </data>
@@ -437,5 +446,14 @@
   </data>
   <data name="MainForm_No" xml:space="preserve">
     <value>Non</value>
+  </data>
+  <data name="Dashboard_CustomerCount" xml:space="preserve">
+    <value>Clients d'aujourd'hui</value>
+  </data>
+  <data name="Dashboard_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Dashboard_Time" xml:space="preserve">
+    <value>Heure</value>
   </data>
 </root>

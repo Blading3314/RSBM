@@ -214,6 +214,33 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customers Today.
+        /// </summary>
+        internal static string Dashboard_CustomerCount {
+            get {
+                return ResourceManager.GetString("Dashboard_CustomerCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string Dashboard_Date {
+            get {
+                return ResourceManager.GetString("Dashboard_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        internal static string Dashboard_Time {
+            get {
+                return ResourceManager.GetString("Dashboard_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Billing.
         /// </summary>
         internal static string MainForm_Billing {
@@ -304,6 +331,33 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not load reservations for billing..
+        /// </summary>
+        internal static string Message_BillReservationLoadError {
+            get {
+                return ResourceManager.GetString("Message_BillReservationLoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bill saved successfully..
+        /// </summary>
+        internal static string Message_BillSaved {
+            get {
+                return ResourceManager.GetString("Message_BillSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not save bill..
+        /// </summary>
+        internal static string Message_BillSaveError {
+            get {
+                return ResourceManager.GetString("Message_BillSaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete this reservation?.
         /// </summary>
         internal static string Message_ConfirmDelete {
@@ -322,11 +376,92 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter a customer name..
+        /// </summary>
+        internal static string Message_CustomerNameRequired {
+            get {
+                return ResourceManager.GetString("Message_CustomerNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Message_ErrorTitle {
+            get {
+                return ResourceManager.GetString("Message_ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bill total could not be calculated..
+        /// </summary>
+        internal static string Message_InvalidBillTotal {
+            get {
+                return ResourceManager.GetString("Message_InvalidBillTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid phone number..
+        /// </summary>
+        internal static string Message_InvalidPhone {
+            get {
+                return ResourceManager.GetString("Message_InvalidPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid reservation selected..
+        /// </summary>
+        internal static string Message_InvalidReservation {
+            get {
+                return ResourceManager.GetString("Message_InvalidReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language loading error..
+        /// </summary>
+        internal static string Message_LanguageLoadError {
+            get {
+                return ResourceManager.GetString("Message_LanguageLoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No available tables..
+        /// </summary>
+        internal static string Message_NoAvailableTables {
+            get {
+                return ResourceManager.GetString("Message_NoAvailableTables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No changes were made.
         /// </summary>
         internal static string Message_NoChangesMade {
             get {
                 return ResourceManager.GetString("Message_NoChangesMade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Party size exceeds table capacity ({0} seats)..
+        /// </summary>
+        internal static string Message_PartySizeExceedsCapacity {
+            get {
+                return ResourceManager.GetString("Message_PartySizeExceedsCapacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a phone number..
+        /// </summary>
+        internal static string Message_PhoneRequired {
+            get {
+                return ResourceManager.GetString("Message_PhoneRequired", resourceCulture);
             }
         }
         
@@ -340,11 +475,56 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not add reservation..
+        /// </summary>
+        internal static string Message_ReservationAddError {
+            get {
+                return ResourceManager.GetString("Message_ReservationAddError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation deleted..
         /// </summary>
         internal static string Message_ReservationDeleted {
             get {
                 return ResourceManager.GetString("Message_ReservationDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not delete reservation..
+        /// </summary>
+        internal static string Message_ReservationDeleteError {
+            get {
+                return ResourceManager.GetString("Message_ReservationDeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not load reservations..
+        /// </summary>
+        internal static string Message_ReservationLoadError {
+            get {
+                return ResourceManager.GetString("Message_ReservationLoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reservation could not be found..
+        /// </summary>
+        internal static string Message_ReservationNotFound {
+            get {
+                return ResourceManager.GetString("Message_ReservationNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not load the selected reservation..
+        /// </summary>
+        internal static string Message_ReservationSelectionError {
+            get {
+                return ResourceManager.GetString("Message_ReservationSelectionError", resourceCulture);
             }
         }
         
@@ -358,11 +538,47 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not update reservation..
+        /// </summary>
+        internal static string Message_ReservationUpdateError {
+            get {
+                return ResourceManager.GetString("Message_ReservationUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a payment method..
+        /// </summary>
+        internal static string Message_SelectPaymentMethod {
+            get {
+                return ResourceManager.GetString("Message_SelectPaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select a reservation..
         /// </summary>
         internal static string Message_SelectReservation {
             get {
                 return ResourceManager.GetString("Message_SelectReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a reservation status..
+        /// </summary>
+        internal static string Message_SelectReservationStatus {
+            get {
+                return ResourceManager.GetString("Message_SelectReservationStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a reservation time..
+        /// </summary>
+        internal static string Message_SelectReservationTime {
+            get {
+                return ResourceManager.GetString("Message_SelectReservationTime", resourceCulture);
             }
         }
         
@@ -385,11 +601,29 @@ namespace RSBM_RestaurantMGR.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table already reserved for this time..
+        /// </summary>
+        internal static string Message_TableAlreadyReserved {
+            get {
+                return ResourceManager.GetString("Message_TableAlreadyReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not load tables..
         /// </summary>
         internal static string Message_TableLoadError {
             get {
                 return ResourceManager.GetString("Message_TableLoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected table could not be found..
+        /// </summary>
+        internal static string Message_TableNotFound {
+            get {
+                return ResourceManager.GetString("Message_TableNotFound", resourceCulture);
             }
         }
         
@@ -408,6 +642,33 @@ namespace RSBM_RestaurantMGR.Resources {
         internal static string Message_TableUpdateError {
             get {
                 return ResourceManager.GetString("Message_TableUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        internal static string Payment_Cash {
+            get {
+                return ResourceManager.GetString("Payment_Cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        internal static string Payment_Credit {
+            get {
+                return ResourceManager.GetString("Payment_Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debit.
+        /// </summary>
+        internal static string Payment_Debit {
+            get {
+                return ResourceManager.GetString("Payment_Debit", resourceCulture);
             }
         }
         
