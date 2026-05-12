@@ -104,8 +104,5 @@ CREATE TABLE Bills
     PaymentStatus VARCHAR(20),
 
     BillDate DATETIME DEFAULT GETDATE(),
-
-    FOREIGN KEY (ReservationID)
-        REFERENCES Reservations(ReservationID)
 );
 GO
