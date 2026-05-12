@@ -36,8 +36,8 @@
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguage = new System.Windows.Forms.Label();
             this.sidebar = new System.Windows.Forms.Panel();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.quitButton = new System.Windows.Forms.Button();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.header.SuspendLayout();
             this.sidebar.SuspendLayout();
             this.SuspendLayout();
@@ -107,7 +107,7 @@
             this.header.Location = new System.Drawing.Point(0, 0);
             this.header.Margin = new System.Windows.Forms.Padding(2);
             this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(824, 65);
+            this.header.Size = new System.Drawing.Size(822, 65);
             this.header.TabIndex = 4;
             // 
             // cmbLanguage
@@ -156,17 +156,6 @@
             this.sidebar.Size = new System.Drawing.Size(135, 503);
             this.sidebar.TabIndex = 5;
             // 
-            // mainPanel
-            // 
-            this.mainPanel.AutoScroll = true;
-            this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(244)))), ((int)(((byte)(246)))));
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.ForeColor = System.Drawing.Color.Black;
-            this.mainPanel.Location = new System.Drawing.Point(135, 65);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(2);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(689, 503);
-            this.mainPanel.TabIndex = 6;
             // quitButton
             // 
             this.quitButton.Location = new System.Drawing.Point(9, 445);
@@ -177,12 +166,24 @@
             this.quitButton.UseVisualStyleBackColor = true;
             this.quitButton.Click += new System.EventHandler(this.quitButton_Click);
             // 
+            // mainPanel
+            // 
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(244)))), ((int)(((byte)(246)))));
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.ForeColor = System.Drawing.Color.Black;
+            this.mainPanel.Location = new System.Drawing.Point(135, 65);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(687, 503);
+            this.mainPanel.TabIndex = 6;
+            // 
             // RestoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(824, 568);
+            this.ClientSize = new System.Drawing.Size(822, 568);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.sidebar);
             this.Controls.Add(this.header);

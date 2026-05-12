@@ -23,9 +23,7 @@ namespace RSBM_RestaurantMGR
             LoadPaymentMethods();
             ApplyLanguage();
             LoadReservationIDs();
-
-            pricePerPersonTextBox.Enabled = true;
-            pricePerPersonTextBox.ReadOnly = false;
+            LoadBills();
         }
         private void LoadReservationIDs()
         {
@@ -166,6 +164,22 @@ namespace RSBM_RestaurantMGR
             pricePerPersonTextBox.Text =
                 (subTotal / people).ToString("0.00");
         }
+        private void LoadBills()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Bills";
+
+                SqlDataAdapter adapter =
+                    new SqlDataAdapter(query, conn);
+
+                DataTable table = new DataTable();
+
+                adapter.Fill(table);
+
+                dataGridBill.DataSource = table;
+            }
+        }
 
         private void btnGenerateBill_Click(object sender, EventArgs e)
         {
@@ -213,6 +227,11 @@ namespace RSBM_RestaurantMGR
             }
 
             MessageBox.Show("Bill saved successfully!");
+        }
+
+        private void dataGridBill_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 

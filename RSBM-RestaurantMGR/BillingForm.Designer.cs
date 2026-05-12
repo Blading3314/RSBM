@@ -52,12 +52,14 @@
             this.premiumCheckBox = new System.Windows.Forms.CheckBox();
             this.drinksCheckBox = new System.Windows.Forms.CheckBox();
             this.btnGenerateBill = new System.Windows.Forms.Button();
+            this.dataGridBill = new System.Windows.Forms.DataGridView();
             this.tableInfoGroupBox.SuspendLayout();
             this.aycePricingGrpupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfPeople)).BeginInit();
             this.paymentMethodGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.extrasGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridBill)).BeginInit();
             this.SuspendLayout();
             // 
             // billing
@@ -79,9 +81,9 @@
             this.tableInfoGroupBox.Controls.Add(this.tableIdComboBox);
             this.tableInfoGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableInfoGroupBox.Location = new System.Drawing.Point(13, 46);
-            this.tableInfoGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableInfoGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.tableInfoGroupBox.Name = "tableInfoGroupBox";
-            this.tableInfoGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableInfoGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.tableInfoGroupBox.Size = new System.Drawing.Size(226, 167);
             this.tableInfoGroupBox.TabIndex = 3;
             this.tableInfoGroupBox.TabStop = false;
@@ -91,7 +93,7 @@
             // 
             this.tableInfoBox.BackColor = System.Drawing.Color.White;
             this.tableInfoBox.Location = new System.Drawing.Point(18, 111);
-            this.tableInfoBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableInfoBox.Margin = new System.Windows.Forms.Padding(2);
             this.tableInfoBox.Multiline = true;
             this.tableInfoBox.Name = "tableInfoBox";
             this.tableInfoBox.ReadOnly = true;
@@ -124,7 +126,7 @@
             // 
             this.tableIdComboBox.FormattingEnabled = true;
             this.tableIdComboBox.Location = new System.Drawing.Point(19, 50);
-            this.tableIdComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableIdComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.tableIdComboBox.Name = "tableIdComboBox";
             this.tableIdComboBox.Size = new System.Drawing.Size(92, 25);
             this.tableIdComboBox.TabIndex = 0;
@@ -137,9 +139,9 @@
             this.aycePricingGrpupBox.Controls.Add(this.priceLabel);
             this.aycePricingGrpupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aycePricingGrpupBox.Location = new System.Drawing.Point(268, 228);
-            this.aycePricingGrpupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aycePricingGrpupBox.Margin = new System.Windows.Forms.Padding(2);
             this.aycePricingGrpupBox.Name = "aycePricingGrpupBox";
-            this.aycePricingGrpupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.aycePricingGrpupBox.Padding = new System.Windows.Forms.Padding(2);
             this.aycePricingGrpupBox.Size = new System.Drawing.Size(226, 102);
             this.aycePricingGrpupBox.TabIndex = 4;
             this.aycePricingGrpupBox.TabStop = false;
@@ -149,7 +151,7 @@
             // 
             this.pricePerPersonTextBox.BackColor = System.Drawing.Color.White;
             this.pricePerPersonTextBox.Location = new System.Drawing.Point(125, 26);
-            this.pricePerPersonTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pricePerPersonTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.pricePerPersonTextBox.Name = "pricePerPersonTextBox";
             this.pricePerPersonTextBox.ReadOnly = true;
             this.pricePerPersonTextBox.Size = new System.Drawing.Size(98, 23);
@@ -158,7 +160,7 @@
             // numberOfPeople
             // 
             this.numberOfPeople.Location = new System.Drawing.Point(125, 62);
-            this.numberOfPeople.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numberOfPeople.Margin = new System.Windows.Forms.Padding(2);
             this.numberOfPeople.Name = "numberOfPeople";
             this.numberOfPeople.Size = new System.Drawing.Size(97, 23);
             this.numberOfPeople.TabIndex = 6;
@@ -197,9 +199,9 @@
             this.paymentMethodGroupBox.Controls.Add(this.subtotalLabel);
             this.paymentMethodGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.paymentMethodGroupBox.Location = new System.Drawing.Point(268, 46);
-            this.paymentMethodGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.paymentMethodGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.paymentMethodGroupBox.Name = "paymentMethodGroupBox";
-            this.paymentMethodGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.paymentMethodGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.paymentMethodGroupBox.Size = new System.Drawing.Size(226, 167);
             this.paymentMethodGroupBox.TabIndex = 4;
             this.paymentMethodGroupBox.TabStop = false;
@@ -208,7 +210,7 @@
             // totalTextBox
             // 
             this.totalTextBox.Location = new System.Drawing.Point(80, 98);
-            this.totalTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.totalTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.totalTextBox.Name = "totalTextBox";
             this.totalTextBox.Size = new System.Drawing.Size(103, 23);
             this.totalTextBox.TabIndex = 12;
@@ -216,7 +218,7 @@
             // subtotalTextBox
             // 
             this.subtotalTextBox.Location = new System.Drawing.Point(80, 25);
-            this.subtotalTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.subtotalTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.subtotalTextBox.Name = "subtotalTextBox";
             this.subtotalTextBox.Size = new System.Drawing.Size(103, 23);
             this.subtotalTextBox.TabIndex = 11;
@@ -226,7 +228,7 @@
             this.paymentMethodComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.paymentMethodComboBox.FormattingEnabled = true;
             this.paymentMethodComboBox.Location = new System.Drawing.Point(80, 133);
-            this.paymentMethodComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.paymentMethodComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.paymentMethodComboBox.Name = "paymentMethodComboBox";
             this.paymentMethodComboBox.Size = new System.Drawing.Size(103, 25);
             this.paymentMethodComboBox.TabIndex = 4;
@@ -245,7 +247,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(80, 63);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(102, 23);
             this.numericUpDown1.TabIndex = 7;
@@ -289,9 +291,9 @@
             this.extrasGroupBox.Controls.Add(this.drinksCheckBox);
             this.extrasGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extrasGroupBox.Location = new System.Drawing.Point(13, 228);
-            this.extrasGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.extrasGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.extrasGroupBox.Name = "extrasGroupBox";
-            this.extrasGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.extrasGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.extrasGroupBox.Size = new System.Drawing.Size(226, 102);
             this.extrasGroupBox.TabIndex = 5;
             this.extrasGroupBox.TabStop = false;
@@ -301,7 +303,7 @@
             // 
             this.premiumCheckBox.AutoSize = true;
             this.premiumCheckBox.Location = new System.Drawing.Point(18, 63);
-            this.premiumCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.premiumCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.premiumCheckBox.Name = "premiumCheckBox";
             this.premiumCheckBox.Size = new System.Drawing.Size(117, 21);
             this.premiumCheckBox.TabIndex = 1;
@@ -312,7 +314,7 @@
             // 
             this.drinksCheckBox.AutoSize = true;
             this.drinksCheckBox.Location = new System.Drawing.Point(18, 29);
-            this.drinksCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.drinksCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.drinksCheckBox.Name = "drinksCheckBox";
             this.drinksCheckBox.Size = new System.Drawing.Size(67, 21);
             this.drinksCheckBox.TabIndex = 0;
@@ -323,7 +325,7 @@
             // 
             this.btnGenerateBill.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerateBill.Location = new System.Drawing.Point(13, 343);
-            this.btnGenerateBill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenerateBill.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenerateBill.Name = "btnGenerateBill";
             this.btnGenerateBill.Size = new System.Drawing.Size(123, 29);
             this.btnGenerateBill.TabIndex = 6;
@@ -331,18 +333,29 @@
             this.btnGenerateBill.UseVisualStyleBackColor = true;
             this.btnGenerateBill.Click += new System.EventHandler(this.btnGenerateBill_Click);
             // 
+            // dataGridBill
+            // 
+            this.dataGridBill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridBill.Location = new System.Drawing.Point(13, 399);
+            this.dataGridBill.Name = "dataGridBill";
+            this.dataGridBill.Size = new System.Drawing.Size(493, 270);
+            this.dataGridBill.TabIndex = 7;
+            this.dataGridBill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridBill_CellContentClick);
+            // 
             // BillingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 382);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(526, 693);
+            this.Controls.Add(this.dataGridBill);
             this.Controls.Add(this.btnGenerateBill);
             this.Controls.Add(this.extrasGroupBox);
             this.Controls.Add(this.paymentMethodGroupBox);
             this.Controls.Add(this.aycePricingGrpupBox);
             this.Controls.Add(this.tableInfoGroupBox);
             this.Controls.Add(this.billing);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "BillingForm";
             this.Text = "Billing MGR";
             this.tableInfoGroupBox.ResumeLayout(false);
@@ -355,6 +368,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.extrasGroupBox.ResumeLayout(false);
             this.extrasGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridBill)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,5 +400,6 @@
         private System.Windows.Forms.TextBox totalTextBox;
         private System.Windows.Forms.TextBox pricePerPersonTextBox;
         private System.Windows.Forms.Button btnGenerateBill;
+        private System.Windows.Forms.DataGridView dataGridBill;
     }
 }
