@@ -182,11 +182,16 @@ namespace RSBM_RestaurantMGR
                     reservationCmd.ExecuteNonQuery();
 
                     // UPDATE TABLE STATUS
-                    string tableStatus =
-                        resStatus.Text == "Confirmed" ||
-                        resStatus.Text == "Seated"
-                        ? "Reserved"
-                        : "Available";
+                    string tableStatus = "Available";
+
+                    if (resStatus.Text == "Confirmed")
+                    {
+                        tableStatus = "Reserved";
+                    } 
+                    else if (resStatus.Text == "Seated")
+                    {
+                        tableStatus = "Occupied";
+                    }
 
                     SqlCommand tableCmd = new SqlCommand(
                         @"UPDATE RestaurantTables
@@ -334,11 +339,16 @@ namespace RSBM_RestaurantMGR
                     }
 
                     // UPDATE NEW TABLE STATUS
-                    string tableStatus =
-                        resStatus.Text == "Confirmed" ||
-                        resStatus.Text == "Seated"
-                        ? "Reserved"
-                        : "Available";
+                    string tableStatus = "Available";
+
+                    if (resStatus.Text == "Confirmed")
+                    {
+                        tableStatus = "Reserved";
+                    }
+                    else if (resStatus.Text == "Seated")
+                    {
+                        tableStatus = "Occupied";
+                    }
 
                     SqlCommand tableCmd = new SqlCommand(
                         @"UPDATE RestaurantTables
