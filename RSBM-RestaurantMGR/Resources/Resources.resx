@@ -228,6 +228,57 @@
   <data name="Message_ConfirmDeleteTitle" xml:space="preserve">
     <value>Confirm Delete</value>
   </data>
+  <data name="Message_ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Message_LanguageLoadError" xml:space="preserve">
+    <value>Language loading error.</value>
+  </data>
+  <data name="Message_ReservationLoadError" xml:space="preserve">
+    <value>Could not load reservations.</value>
+  </data>
+  <data name="Message_CustomerNameRequired" xml:space="preserve">
+    <value>Please enter a customer name.</value>
+  </data>
+  <data name="Message_PhoneRequired" xml:space="preserve">
+    <value>Please enter a phone number.</value>
+  </data>
+  <data name="Message_InvalidPhone" xml:space="preserve">
+    <value>Invalid phone number.</value>
+  </data>
+  <data name="Message_SelectReservationTime" xml:space="preserve">
+    <value>Please select a reservation time.</value>
+  </data>
+  <data name="Message_SelectReservationStatus" xml:space="preserve">
+    <value>Please select a reservation status.</value>
+  </data>
+  <data name="Message_TableNotFound" xml:space="preserve">
+    <value>Selected table could not be found.</value>
+  </data>
+  <data name="Message_PartySizeExceedsCapacity" xml:space="preserve">
+    <value>Party size exceeds table capacity ({0} seats).</value>
+  </data>
+  <data name="Message_TableAlreadyReserved" xml:space="preserve">
+    <value>Table already reserved for this time.</value>
+  </data>
+  <data name="Message_ReservationAddError" xml:space="preserve">
+    <value>Could not add reservation.</value>
+  </data>
+  <data name="Message_ReservationNotFound" xml:space="preserve">
+    <value>Reservation could not be found.</value>
+  </data>
+  <data name="Message_ReservationUpdateError" xml:space="preserve">
+    <value>Could not update reservation.</value>
+  </data>
+  <data name="Message_ReservationDeleteError" xml:space="preserve">
+    <value>Could not delete reservation.</value>
+  </data>
+  <data name="Message_ReservationSelectionError" xml:space="preserve">
+    <value>Could not load the selected reservation.</value>
+  </data>
+  <data name="Message_NoAvailableTables" xml:space="preserve">
+    <value>No available tables.</value>
+  </data>
   <data name="TableForm_Title" xml:space="preserve">
     <value>Table MGR</value>
   </data>
@@ -347,6 +398,33 @@
   </data>
   <data name="BillingForm_GenerateBill" xml:space="preserve">
     <value>Generate Bill</value>
+  </data>
+  <data name="Payment_Cash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="Payment_Debit" xml:space="preserve">
+    <value>Debit</value>
+  </data>
+  <data name="Payment_Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Message_BillReservationLoadError" xml:space="preserve">
+    <value>Could not load reservations for billing.</value>
+  </data>
+  <data name="Message_SelectPaymentMethod" xml:space="preserve">
+    <value>Please select a payment method.</value>
+  </data>
+  <data name="Message_InvalidReservation" xml:space="preserve">
+    <value>Invalid reservation selected.</value>
+  </data>
+  <data name="Message_InvalidBillTotal" xml:space="preserve">
+    <value>Bill total could not be calculated.</value>
+  </data>
+  <data name="Message_BillSaved" xml:space="preserve">
+    <value>Bill saved successfully.</value>
+  </data>
+  <data name="Message_BillSaveError" xml:space="preserve">
+    <value>Could not save bill.</value>
   </data>
   <data name="Message_NoChangesMade" xml:space="preserve">
     <value>No changes were made</value>
