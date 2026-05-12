@@ -22,11 +22,6 @@ namespace RSBM_RestaurantMGR
             resDate.Format = DateTimePickerFormat.Custom;
             resDate.CustomFormat = "MMM dd, yyyy";
 
-            reservationGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            reservationGrid.AllowUserToAddRows = false;
-            reservationGrid.ReadOnly = true;
-            reservationGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
             LoadTimeSlots();
             LoadStatusOptions();
             LoadReservations();
@@ -39,6 +34,12 @@ namespace RSBM_RestaurantMGR
             btnDeleteReservation.Enabled = false;
 
             reservationGrid.CellClick += reservationGrid_CellClick;
+
+            this.Shown += (s, e) =>
+            {
+                reservationGrid.ClearSelection();
+                reservationGrid.CurrentCell = null;
+            };
         }
 
         public void ApplyLanguage()
@@ -46,9 +47,10 @@ namespace RSBM_RestaurantMGR
             string selectedStatus = resStatus.Text;
 
             LanguageManager.ApplyLanguageToForm(this);
+
             LoadStatusOptions();
 
-            if (!string.IsNullOrWhiteSpace(selectedStatus) && resStatus.Items.Contains(selectedStatus))
+            if (resStatus.Items.Contains(selectedStatus))
             {
                 resStatus.Text = selectedStatus;
             }
@@ -96,13 +98,13 @@ namespace RSBM_RestaurantMGR
 
         private void btnAddReservation_Click(object sender, EventArgs e)
         {
-            int selectedTableId;
-            DateTime selectedTime;
-
-            if (!ValidateReservationInput(out selectedTableId, out selectedTime))
+            if (!ValidateReservationInput())
             {
                 return;
             }
+
+            int tableId = Convert.ToInt32(resTable.SelectedItem);
+            DateTime selectedTime = DateTime.Parse(resTimeSlot.Text);
 
             try
             {
@@ -110,22 +112,94 @@ namespace RSBM_RestaurantMGR
                 {
                     conn.Open();
 
-                    if (!ValidateTableCapacity(conn, selectedTableId))
+                    // CHECK TABLE CAPACITY
+                    SqlCommand capacityCmd = new SqlCommand(
+                        @"SELECT Capacity
+                          FROM RestaurantTables
+                          WHERE TableID = @TableID", conn);
+
+                    capacityCmd.Parameters.AddWithValue("@TableID", tableId);
+
+                    int capacity = Convert.ToInt32(capacityCmd.ExecuteScalar());
+
+                    if (resPartySize.Value > capacity)
                     {
+                        MessageBox.Show(
+                            string.Format(
+                                LanguageManager.GetString("Message_PartySizeExceedsCapacity"),
+                                capacity));
+
                         return;
                     }
 
-                    if (ReservationExists(conn, selectedTableId, selectedTime, 0))
+                    // CHECK EXISTING RESERVATION
+                    SqlCommand checkCmd = new SqlCommand(
+                        @"SELECT COUNT(*)
+                          FROM Reservations
+                          WHERE TableID = @TableID
+                          AND ReservationDate = @ReservationDate
+                          AND ReservationTime = @ReservationTime", conn);
+
+                    checkCmd.Parameters.AddWithValue("@TableID", tableId);
+                    checkCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    checkCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+
+                    int existing = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (existing > 0)
                     {
                         ShowMessage("Message_TableAlreadyReserved");
                         return;
                     }
 
-                    int customerId = InsertCustomer(conn);
-                    InsertReservation(conn, customerId, selectedTableId, selectedTime);
-                    UpdateTableStatus(conn, selectedTableId, "Reserved");
+                    // INSERT CUSTOMER
+                    SqlCommand customerCmd = new SqlCommand(
+                        @"INSERT INTO Customers (CustomerName, Phone)
+                          VALUES (@CustomerName, @Phone);
+                          SELECT SCOPE_IDENTITY();", conn);
+
+                    customerCmd.Parameters.AddWithValue("@CustomerName", resName.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@Phone", resPhone.Text.Trim());
+
+                    int customerId = Convert.ToInt32(customerCmd.ExecuteScalar());
+
+                    // INSERT RESERVATION
+                    SqlCommand reservationCmd = new SqlCommand(
+                        @"INSERT INTO Reservations
+                          (CustomerID, TableID, ReservationDate,
+                           ReservationTime, Guests, Status)
+                          VALUES
+                          (@CustomerID, @TableID, @ReservationDate,
+                           @ReservationTime, @Guests, @Status)", conn);
+
+                    reservationCmd.Parameters.AddWithValue("@CustomerID", customerId);
+                    reservationCmd.Parameters.AddWithValue("@TableID", tableId);
+                    reservationCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    reservationCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+                    reservationCmd.Parameters.AddWithValue("@Guests", resPartySize.Value);
+                    reservationCmd.Parameters.AddWithValue("@Status", resStatus.Text);
+
+                    reservationCmd.ExecuteNonQuery();
+
+                    // UPDATE TABLE STATUS
+                    string tableStatus =
+                        resStatus.Text == "Confirmed" ||
+                        resStatus.Text == "Seated"
+                        ? "Reserved"
+                        : "Available";
+
+                    SqlCommand tableCmd = new SqlCommand(
+                        @"UPDATE RestaurantTables
+                          SET Status = @Status
+                          WHERE TableID = @TableID", conn);
+
+                    tableCmd.Parameters.AddWithValue("@Status", tableStatus);
+                    tableCmd.Parameters.AddWithValue("@TableID", tableId);
+
+                    tableCmd.ExecuteNonQuery();
 
                     ShowMessage("Message_ReservationAdded");
+
                     ReloadReservationData();
                 }
             }
@@ -143,13 +217,13 @@ namespace RSBM_RestaurantMGR
                 return;
             }
 
-            int selectedTableId;
-            DateTime selectedTime;
-
-            if (!ValidateReservationInput(out selectedTableId, out selectedTime))
+            if (!ValidateReservationInput())
             {
                 return;
             }
+
+            int tableId = Convert.ToInt32(resTable.SelectedItem);
+            DateTime selectedTime = DateTime.Parse(resTimeSlot.Text);
 
             try
             {
@@ -157,47 +231,127 @@ namespace RSBM_RestaurantMGR
                 {
                     conn.Open();
 
-                    object customerValue = ExecuteScalar(conn,
-                        "SELECT CustomerID FROM Reservations WHERE ReservationID = @ReservationID",
-                        "@ReservationID", selectedReservationId);
+                    // GET OLD TABLE ID
+                    SqlCommand oldTableCmd = new SqlCommand(
+                        @"SELECT TableID
+                          FROM Reservations
+                          WHERE ReservationID = @ReservationID", conn);
 
-                    object oldTableValue = ExecuteScalar(conn,
-                        "SELECT TableID FROM Reservations WHERE ReservationID = @ReservationID",
-                        "@ReservationID", selectedReservationId);
+                    oldTableCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
-                    if (customerValue == null || customerValue == DBNull.Value ||
-                        oldTableValue == null || oldTableValue == DBNull.Value)
+                    int oldTableId = Convert.ToInt32(oldTableCmd.ExecuteScalar());
+
+                    // CHECK CAPACITY
+                    SqlCommand capacityCmd = new SqlCommand(
+                        @"SELECT Capacity
+                          FROM RestaurantTables
+                          WHERE TableID = @TableID", conn);
+
+                    capacityCmd.Parameters.AddWithValue("@TableID", tableId);
+
+                    int capacity = Convert.ToInt32(capacityCmd.ExecuteScalar());
+
+                    if (resPartySize.Value > capacity)
                     {
-                        ShowMessage("Message_ReservationNotFound");
-                        ReloadReservationData();
+                        MessageBox.Show(
+                            string.Format(
+                                LanguageManager.GetString("Message_PartySizeExceedsCapacity"),
+                                capacity));
+
                         return;
                     }
 
-                    if (!ValidateTableCapacity(conn, selectedTableId))
-                    {
-                        return;
-                    }
+                    // CHECK EXISTING RESERVATION
+                    SqlCommand checkCmd = new SqlCommand(
+                        @"SELECT COUNT(*)
+                          FROM Reservations
+                          WHERE TableID = @TableID
+                          AND ReservationDate = @ReservationDate
+                          AND ReservationTime = @ReservationTime
+                          AND ReservationID <> @ReservationID", conn);
 
-                    if (ReservationExists(conn, selectedTableId, selectedTime, selectedReservationId))
+                    checkCmd.Parameters.AddWithValue("@TableID", tableId);
+                    checkCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    checkCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+                    checkCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
+
+                    int existing = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (existing > 0)
                     {
                         ShowMessage("Message_TableAlreadyReserved");
                         return;
                     }
 
-                    int customerId = Convert.ToInt32(customerValue);
-                    int oldTableId = Convert.ToInt32(oldTableValue);
+                    // UPDATE CUSTOMER
+                    SqlCommand customerCmd = new SqlCommand(
+                        @"UPDATE Customers
+                          SET CustomerName = @CustomerName,
+                              Phone = @Phone
+                          WHERE CustomerID =
+                          (
+                              SELECT CustomerID
+                              FROM Reservations
+                              WHERE ReservationID = @ReservationID
+                          )", conn);
 
-                    UpdateCustomer(conn, customerId);
-                    UpdateReservation(conn, selectedTableId, selectedTime);
+                    customerCmd.Parameters.AddWithValue("@CustomerName", resName.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@Phone", resPhone.Text.Trim());
+                    customerCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
-                    if (oldTableId != selectedTableId)
+                    customerCmd.ExecuteNonQuery();
+
+                    // UPDATE RESERVATION
+                    SqlCommand reservationCmd = new SqlCommand(
+                        @"UPDATE Reservations
+                          SET TableID = @TableID,
+                              ReservationDate = @ReservationDate,
+                              ReservationTime = @ReservationTime,
+                              Guests = @Guests,
+                              Status = @Status
+                          WHERE ReservationID = @ReservationID", conn);
+
+                    reservationCmd.Parameters.AddWithValue("@TableID", tableId);
+                    reservationCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    reservationCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+                    reservationCmd.Parameters.AddWithValue("@Guests", resPartySize.Value);
+                    reservationCmd.Parameters.AddWithValue("@Status", resStatus.Text);
+                    reservationCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
+
+                    reservationCmd.ExecuteNonQuery();
+
+                    // RESET OLD TABLE
+                    if (oldTableId != tableId)
                     {
-                        UpdateTableStatus(conn, oldTableId, "Available");
+                        SqlCommand oldTableUpdate = new SqlCommand(
+                            @"UPDATE RestaurantTables
+                              SET Status = 'Available'
+                              WHERE TableID = @TableID", conn);
+
+                        oldTableUpdate.Parameters.AddWithValue("@TableID", oldTableId);
+
+                        oldTableUpdate.ExecuteNonQuery();
                     }
 
-                    UpdateTableStatus(conn, selectedTableId, "Reserved");
+                    // UPDATE NEW TABLE STATUS
+                    string tableStatus =
+                        resStatus.Text == "Confirmed" ||
+                        resStatus.Text == "Seated"
+                        ? "Reserved"
+                        : "Available";
+
+                    SqlCommand tableCmd = new SqlCommand(
+                        @"UPDATE RestaurantTables
+                          SET Status = @Status
+                          WHERE TableID = @TableID", conn);
+
+                    tableCmd.Parameters.AddWithValue("@Status", tableStatus);
+                    tableCmd.Parameters.AddWithValue("@TableID", tableId);
+
+                    tableCmd.ExecuteNonQuery();
 
                     ShowMessage("Message_ReservationUpdated");
+
                     ReloadReservationData();
                 }
             }
@@ -233,29 +387,37 @@ namespace RSBM_RestaurantMGR
                 {
                     conn.Open();
 
-                    object tableValue = ExecuteScalar(conn,
-                        "SELECT TableID FROM Reservations WHERE ReservationID = @ReservationID",
-                        "@ReservationID", selectedReservationId);
+                    // GET TABLE ID
+                    SqlCommand tableCmd = new SqlCommand(
+                        @"SELECT TableID
+                          FROM Reservations
+                          WHERE ReservationID = @ReservationID", conn);
 
-                    if (tableValue == null || tableValue == DBNull.Value)
-                    {
-                        ShowMessage("Message_ReservationNotFound");
-                        ReloadReservationData();
-                        return;
-                    }
+                    tableCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
-                    int tableId = Convert.ToInt32(tableValue);
+                    int tableId = Convert.ToInt32(tableCmd.ExecuteScalar());
 
-                    using (SqlCommand cmd = new SqlCommand(
-                        "DELETE FROM Reservations WHERE ReservationID = @ReservationID", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
-                        cmd.ExecuteNonQuery();
-                    }
+                    // DELETE RESERVATION
+                    SqlCommand deleteCmd = new SqlCommand(
+                        @"DELETE FROM Reservations
+                          WHERE ReservationID = @ReservationID", conn);
 
-                    UpdateTableStatus(conn, tableId, "Available");
+                    deleteCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
+
+                    deleteCmd.ExecuteNonQuery();
+
+                    // UPDATE TABLE STATUS
+                    SqlCommand updateCmd = new SqlCommand(
+                        @"UPDATE RestaurantTables
+                          SET Status = 'Available'
+                          WHERE TableID = @TableID", conn);
+
+                    updateCmd.Parameters.AddWithValue("@TableID", tableId);
+
+                    updateCmd.ExecuteNonQuery();
 
                     ShowMessage("Message_ReservationDeleted");
+
                     ReloadReservationData();
                 }
             }
@@ -265,11 +427,8 @@ namespace RSBM_RestaurantMGR
             }
         }
 
-        private bool ValidateReservationInput(out int selectedTableId, out DateTime selectedTime)
+        private bool ValidateReservationInput()
         {
-            selectedTableId = 0;
-            selectedTime = DateTime.MinValue;
-
             if (string.IsNullOrWhiteSpace(resName.Text))
             {
                 ShowMessage("Message_CustomerNameRequired");
@@ -285,6 +444,7 @@ namespace RSBM_RestaurantMGR
             }
 
             string digitsOnly = new string(resPhone.Text.Where(char.IsDigit).ToArray());
+
             if (digitsOnly.Length < 10)
             {
                 ShowMessage("Message_InvalidPhone");
@@ -292,189 +452,25 @@ namespace RSBM_RestaurantMGR
                 return false;
             }
 
-            if (resTable.SelectedItem == null || !int.TryParse(resTable.SelectedItem.ToString(), out selectedTableId))
+            if (resTable.SelectedItem == null)
             {
                 ShowMessage("Message_SelectTable");
-                resTable.Focus();
                 return false;
             }
 
-            if (resTimeSlot.SelectedItem == null || !DateTime.TryParse(resTimeSlot.SelectedItem.ToString(), out selectedTime))
+            if (resTimeSlot.SelectedItem == null)
             {
                 ShowMessage("Message_SelectReservationTime");
-                resTimeSlot.Focus();
                 return false;
             }
 
             if (resStatus.SelectedItem == null)
             {
                 ShowMessage("Message_SelectReservationStatus");
-                resStatus.Focus();
                 return false;
             }
 
             return true;
-        }
-
-        private bool ValidateTableCapacity(SqlConnection conn, int tableId)
-        {
-            object capacityValue = ExecuteScalar(conn,
-                "SELECT Capacity FROM RestaurantTables WHERE TableID = @TableID",
-                "@TableID", tableId);
-
-            if (capacityValue == null || capacityValue == DBNull.Value)
-            {
-                ShowMessage("Message_TableNotFound");
-                return false;
-            }
-
-            int tableCapacity = Convert.ToInt32(capacityValue);
-
-            if (resPartySize.Value > tableCapacity)
-            {
-                MessageBox.Show(string.Format(
-                    LanguageManager.GetString("Message_PartySizeExceedsCapacity"),
-                    tableCapacity));
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool ReservationExists(SqlConnection conn, int tableId, DateTime selectedTime, int ignoredReservationId)
-        {
-            string query =
-            @"SELECT COUNT(*)
-              FROM Reservations
-              WHERE TableID = @TableID
-              AND ReservationDate = @ReservationDate
-              AND ReservationTime = @ReservationTime
-              AND ReservationID <> @ReservationID";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@TableID", tableId);
-                cmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
-                cmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
-                cmd.Parameters.AddWithValue("@ReservationID", ignoredReservationId);
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-        }
-
-        private int InsertCustomer(SqlConnection conn)
-        {
-            string query =
-            @"INSERT INTO Customers (CustomerName, Phone)
-              VALUES (@CustomerName, @Phone);
-              SELECT SCOPE_IDENTITY();";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@CustomerName", resName.Text.Trim());
-                cmd.Parameters.AddWithValue("@Phone", resPhone.Text.Trim());
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-        }
-
-        private void InsertReservation(SqlConnection conn, int customerId, int tableId, DateTime selectedTime)
-        {
-            string query =
-            @"INSERT INTO Reservations
-              (CustomerID, TableID, ReservationDate, ReservationTime, Guests, Status)
-              VALUES
-              (@CustomerID, @TableID, @ReservationDate, @ReservationTime, @Guests, @Status)";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@CustomerID", customerId);
-                cmd.Parameters.AddWithValue("@TableID", tableId);
-                cmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
-                cmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
-                cmd.Parameters.AddWithValue("@Guests", resPartySize.Value);
-                cmd.Parameters.AddWithValue("@Status", resStatus.Text);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        private void UpdateCustomer(SqlConnection conn, int customerId)
-        {
-            using (SqlCommand cmd = new SqlCommand(
-                @"UPDATE Customers
-                  SET CustomerName = @CustomerName,
-                      Phone = @Phone
-                  WHERE CustomerID = @CustomerID", conn))
-            {
-                cmd.Parameters.AddWithValue("@CustomerName", resName.Text.Trim());
-                cmd.Parameters.AddWithValue("@Phone", resPhone.Text.Trim());
-                cmd.Parameters.AddWithValue("@CustomerID", customerId);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        private void UpdateReservation(SqlConnection conn, int tableId, DateTime selectedTime)
-        {
-            using (SqlCommand cmd = new SqlCommand(
-                @"UPDATE Reservations
-                  SET TableID = @TableID,
-                      ReservationDate = @ReservationDate,
-                      ReservationTime = @ReservationTime,
-                      Guests = @Guests,
-                      Status = @Status
-                  WHERE ReservationID = @ReservationID", conn))
-            {
-                cmd.Parameters.AddWithValue("@TableID", tableId);
-                cmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
-                cmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
-                cmd.Parameters.AddWithValue("@Guests", resPartySize.Value);
-                cmd.Parameters.AddWithValue("@Status", resStatus.Text);
-                cmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        private void UpdateTableStatus(SqlConnection conn, int tableId, string status)
-        {
-            using (SqlCommand cmd = new SqlCommand(
-                @"UPDATE RestaurantTables
-                  SET Status = @Status
-                  WHERE TableID = @TableID", conn))
-            {
-                cmd.Parameters.AddWithValue("@Status", status);
-                cmd.Parameters.AddWithValue("@TableID", tableId);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        private object ExecuteScalar(SqlConnection conn, string query, string parameterName, object value)
-        {
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue(parameterName, value);
-                return cmd.ExecuteScalar();
-            }
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
-        private void ClearForm()
-        {
-            resName.Clear();
-            resPhone.Clear();
-
-            resPartySize.Value = 1;
-            resDate.Value = DateTime.Now;
-
-            SelectFirstItem(resTimeSlot);
-            SelectFirstItem(resStatus);
-
-            reservationGrid.ClearSelection();
-            selectedReservationId = 0;
-
-            btnEditReservation.Enabled = false;
-            btnDeleteReservation.Enabled = false;
         }
 
         private void reservationGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -489,22 +485,33 @@ namespace RSBM_RestaurantMGR
                 DataGridViewRow row = reservationGrid.Rows[e.RowIndex];
 
                 selectedReservationId = Convert.ToInt32(row.Cells["ID"].Value);
+
                 resName.Text = Convert.ToString(row.Cells["Name"].Value);
                 resPhone.Text = Convert.ToString(row.Cells["Phone"].Value);
-                resPartySize.Value = Convert.ToDecimal(row.Cells["Guests"].Value);
-                resDate.Value = Convert.ToDateTime(row.Cells["Date"].Value);
 
-                DateTime timeValue = DateTime.Today.Add((TimeSpan)row.Cells["Time"].Value);
+                resPartySize.Value =
+                    Convert.ToDecimal(row.Cells["Guests"].Value);
+
+                resDate.Value =
+                    Convert.ToDateTime(row.Cells["Date"].Value);
+
+                DateTime timeValue =
+                    DateTime.Today.Add((TimeSpan)row.Cells["Time"].Value);
+
                 resTimeSlot.Text = timeValue.ToString("hh:mm tt");
 
-                string tableId = Convert.ToString(row.Cells["TableID"].Value);
+                string tableId =
+                    Convert.ToString(row.Cells["TableID"].Value);
+
                 if (!resTable.Items.Contains(tableId))
                 {
                     resTable.Items.Add(tableId);
                 }
+
                 resTable.Text = tableId;
 
-                resStatus.Text = Convert.ToString(row.Cells["Status"].Value);
+                resStatus.Text =
+                    Convert.ToString(row.Cells["Status"].Value);
 
                 btnEditReservation.Enabled = true;
                 btnDeleteReservation.Enabled = true;
@@ -512,6 +519,7 @@ namespace RSBM_RestaurantMGR
             catch (Exception ex)
             {
                 ClearForm();
+
                 ShowError("Message_ReservationSelectionError", ex);
             }
         }
@@ -522,9 +530,11 @@ namespace RSBM_RestaurantMGR
             DateTime end = DateTime.Today.AddHours(21);
 
             resTimeSlot.Items.Clear();
+
             while (start <= end)
             {
                 resTimeSlot.Items.Add(start.ToString("hh:mm tt"));
+
                 start = start.AddMinutes(30);
             }
         }
@@ -534,7 +544,6 @@ namespace RSBM_RestaurantMGR
             LanguageManager.UpdateComboBoxItems(
                 resStatus,
                 "Status_Confirmed",
-                "Status_Pending",
                 "Status_Seated",
                 "Status_Completed",
                 "Status_Cancelled",
@@ -558,23 +567,19 @@ namespace RSBM_RestaurantMGR
                       WHERE Status = 'Available'
                       ORDER BY TableNumber";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            resTable.Items.Add(reader["TableID"].ToString());
-                        }
+                        resTable.Items.Add(reader["TableID"].ToString());
                     }
                 }
 
                 if (resTable.Items.Count > 0)
                 {
                     resTable.SelectedIndex = 0;
-                }
-                else
-                {
-                    ShowMessage("Message_NoAvailableTables");
                 }
             }
             catch (Exception ex)
@@ -587,6 +592,30 @@ namespace RSBM_RestaurantMGR
         {
             LoadReservations();
             LoadAvailableTables();
+            ClearForm();
+        }
+
+        private void ClearForm()
+        {
+            resName.Clear();
+            resPhone.Clear();
+
+            resPartySize.Value = 1;
+            resDate.Value = DateTime.Now;
+
+            SelectFirstItem(resTimeSlot);
+            SelectFirstItem(resStatus);
+
+            reservationGrid.ClearSelection();
+
+            selectedReservationId = 0;
+
+            btnEditReservation.Enabled = false;
+            btnDeleteReservation.Enabled = false;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
             ClearForm();
         }
 
@@ -606,7 +635,10 @@ namespace RSBM_RestaurantMGR
         private void ShowError(string resourceKey, Exception ex)
         {
             MessageBox.Show(
-                string.Format("{0}\n\n{1}", LanguageManager.GetString(resourceKey), ex.Message),
+                string.Format(
+                    "{0}\n\n{1}",
+                    LanguageManager.GetString(resourceKey),
+                    ex.Message),
                 LanguageManager.GetString("Message_ErrorTitle"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
