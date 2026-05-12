@@ -143,7 +143,7 @@
             this.resPartySize.BackColor = System.Drawing.Color.White;
             this.resPartySize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.resPartySize.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resPartySize.Location = new System.Drawing.Point(558, 55);
+            this.resPartySize.Location = new System.Drawing.Point(675, 54);
             this.resPartySize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.resPartySize.Maximum = new decimal(new int[] {
             15,
@@ -156,7 +156,7 @@
             0,
             0});
             this.resPartySize.Name = "resPartySize";
-            this.resPartySize.Size = new System.Drawing.Size(65, 27);
+            this.resPartySize.Size = new System.Drawing.Size(90, 27);
             this.resPartySize.TabIndex = 7;
             this.resPartySize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.resPartySize.Value = new decimal(new int[] {
