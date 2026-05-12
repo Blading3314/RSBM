@@ -93,8 +93,6 @@ CREATE TABLE Bills
 (
     BillID INT PRIMARY KEY IDENTITY(1,1),
 
-    ReservationID INT NOT NULL,
-
     SubTotal DECIMAL(10,2) NOT NULL,
 
     TaxAmount DECIMAL(10,2) NOT NULL,
