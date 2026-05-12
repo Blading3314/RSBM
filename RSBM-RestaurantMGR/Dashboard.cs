@@ -53,5 +53,10 @@ namespace RSBM_RestaurantMGR
                 }
             }
         }
+
+        private void dasbboardRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            LoadCustomerCount();
+        }
     }
 }
