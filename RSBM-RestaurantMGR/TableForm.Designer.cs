@@ -43,6 +43,8 @@
             this.tableGrid = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tableStatusDateLabel = new System.Windows.Forms.Label();
+            this.tableStatusDatePicker = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.tableGrid)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -209,6 +211,8 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Controls.Add(this.tableStatusDatePicker);
+            this.panel2.Controls.Add(this.tableStatusDateLabel);
             this.panel2.Controls.Add(this.editTableLabel);
             this.panel2.Controls.Add(this.tableID);
             this.panel2.Controls.Add(this.statusLabel);
@@ -220,6 +224,25 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(885, 101);
             this.panel2.TabIndex = 12;
+            // 
+            // tableStatusDateLabel
+            // 
+            this.tableStatusDateLabel.AutoSize = true;
+            this.tableStatusDateLabel.Font = new System.Drawing.Font("Segoe UI", 10.8F);
+            this.tableStatusDateLabel.Location = new System.Drawing.Point(594, 13);
+            this.tableStatusDateLabel.Name = "tableStatusDateLabel";
+            this.tableStatusDateLabel.Size = new System.Drawing.Size(52, 25);
+            this.tableStatusDateLabel.TabIndex = 9;
+            this.tableStatusDateLabel.Text = "Date:";
+            // 
+            // tableStatusDatePicker
+            // 
+            this.tableStatusDatePicker.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tableStatusDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tableStatusDatePicker.Location = new System.Drawing.Point(670, 13);
+            this.tableStatusDatePicker.Name = "tableStatusDatePicker";
+            this.tableStatusDatePicker.Size = new System.Drawing.Size(171, 27);
+            this.tableStatusDatePicker.TabIndex = 10;
             // 
             // TableForm
             // 
@@ -257,5 +280,7 @@
         private System.Windows.Forms.DataGridView tableGrid;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label tableStatusDateLabel;
+        private System.Windows.Forms.DateTimePicker tableStatusDatePicker;
     }
 }

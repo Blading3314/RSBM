@@ -49,7 +49,7 @@
             this.btnGenerateBill = new System.Windows.Forms.Button();
             this.dataGridBill = new System.Windows.Forms.DataGridView();
             this.Status = new System.Windows.Forms.ComboBox();
-            this.Update = new System.Windows.Forms.Button();
+            this.btnUpdateStatus = new System.Windows.Forms.Button();
             this.selectedBillId = new System.Windows.Forms.TextBox();
             this.BillIDLabel = new System.Windows.Forms.Label();
             this.DeleteButton = new System.Windows.Forms.Button();
@@ -58,6 +58,8 @@
             this.lblPrice = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.reservationLabel = new System.Windows.Forms.Label();
+            this.reservationComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfPeople)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBill)).BeginInit();
@@ -299,21 +301,21 @@
             this.Status.TabIndex = 8;
             this.Status.Text = "Status";
             // 
-            // Update
+            // btnUpdateStatus
             // 
-            this.Update.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.Update.FlatAppearance.BorderSize = 0;
-            this.Update.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Update.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Update.ForeColor = System.Drawing.Color.White;
-            this.Update.Location = new System.Drawing.Point(440, 332);
-            this.Update.Margin = new System.Windows.Forms.Padding(4);
-            this.Update.Name = "Update";
-            this.Update.Size = new System.Drawing.Size(130, 55);
-            this.Update.TabIndex = 10;
-            this.Update.Text = "Update";
-            this.Update.UseVisualStyleBackColor = false;
-            this.Update.Click += new System.EventHandler(this.btnUpdateStatus_Click);
+            this.btnUpdateStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnUpdateStatus.FlatAppearance.BorderSize = 0;
+            this.btnUpdateStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateStatus.ForeColor = System.Drawing.Color.White;
+            this.btnUpdateStatus.Location = new System.Drawing.Point(440, 332);
+            this.btnUpdateStatus.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUpdateStatus.Name = "btnUpdateStatus";
+            this.btnUpdateStatus.Size = new System.Drawing.Size(130, 55);
+            this.btnUpdateStatus.TabIndex = 10;
+            this.btnUpdateStatus.Text = "Update";
+            this.btnUpdateStatus.UseVisualStyleBackColor = false;
+            this.btnUpdateStatus.Click += new System.EventHandler(this.btnUpdateStatus_Click);
             // 
             // selectedBillId
             // 
@@ -368,6 +370,8 @@
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.premiumCheckBox);
+            this.panel2.Controls.Add(this.reservationLabel);
+            this.panel2.Controls.Add(this.reservationComboBox);
             this.panel2.Controls.Add(this.lblPrice);
             this.panel2.Controls.Add(this.paymentMethodComboBox);
             this.panel2.Controls.Add(this.paymentMethodLabel);
@@ -418,6 +422,28 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "Payment";
             // 
+            // reservationLabel
+            // 
+            this.reservationLabel.AutoSize = true;
+            this.reservationLabel.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reservationLabel.Location = new System.Drawing.Point(263, 180);
+            this.reservationLabel.Name = "reservationLabel";
+            this.reservationLabel.Size = new System.Drawing.Size(108, 25);
+            this.reservationLabel.TabIndex = 19;
+            this.reservationLabel.Text = "Reservation:";
+            // 
+            // reservationComboBox
+            // 
+            this.reservationComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(231)))), ((int)(((byte)(235)))));
+            this.reservationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.reservationComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reservationComboBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reservationComboBox.FormattingEnabled = true;
+            this.reservationComboBox.Location = new System.Drawing.Point(267, 209);
+            this.reservationComboBox.Name = "reservationComboBox";
+            this.reservationComboBox.Size = new System.Drawing.Size(212, 28);
+            this.reservationComboBox.TabIndex = 20;
+            // 
             // BillingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -430,7 +456,7 @@
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.BillIDLabel);
             this.Controls.Add(this.selectedBillId);
-            this.Controls.Add(this.Update);
+            this.Controls.Add(this.btnUpdateStatus);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.dataGridBill);
             this.Controls.Add(this.btnGenerateBill);
@@ -469,7 +495,7 @@
         private System.Windows.Forms.Button btnGenerateBill;
         private System.Windows.Forms.DataGridView dataGridBill;
         private System.Windows.Forms.ComboBox Status;
-        private System.Windows.Forms.Button Update;
+        private System.Windows.Forms.Button btnUpdateStatus;
         private System.Windows.Forms.TextBox selectedBillId;
         private System.Windows.Forms.Label BillIDLabel;
         private System.Windows.Forms.Button DeleteButton;
@@ -478,5 +504,7 @@
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label reservationLabel;
+        private System.Windows.Forms.ComboBox reservationComboBox;
     }
 }

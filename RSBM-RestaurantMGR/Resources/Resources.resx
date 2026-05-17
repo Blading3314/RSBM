@@ -189,15 +189,6 @@
   <data name="ReservationForm_Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
-  <data name="Dashboard_CustomerCount" xml:space="preserve">
-    <value>Customer Count</value>
-  </data>
-  <data name="Dashboard_Date" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="Dashboard_Time" xml:space="preserve">
-    <value>Time</value>
-  </data>
   <data name="ReservationForm_Refresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -268,7 +259,7 @@
     <value>Party size exceeds table capacity ({0} seats).</value>
   </data>
   <data name="Message_TableAlreadyReserved" xml:space="preserve">
-    <value>Table already reserved for this time.</value>
+    <value>Table already reserved during this 1-hour time block.</value>
   </data>
   <data name="Message_ReservationAddError" xml:space="preserve">
     <value>Could not add reservation.</value>
@@ -305,6 +296,9 @@
   </data>
   <data name="TableForm_Type" xml:space="preserve">
     <value>Type:</value>
+  </data>
+  <data name="TableForm_StatusDate" xml:space="preserve">
+    <value>Date:</value>
   </data>
   <data name="TableForm_UpdateTable" xml:space="preserve">
     <value>Update Table</value>
@@ -408,6 +402,27 @@
   <data name="BillingForm_GenerateBill" xml:space="preserve">
     <value>Generate Bill</value>
   </data>
+  <data name="BillingForm_PricingSection" xml:space="preserve">
+    <value>Pricing</value>
+  </data>
+  <data name="BillingForm_ExtrasSection" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="BillingForm_PaymentSection" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="BillingForm_Reservation" xml:space="preserve">
+    <value>Reservation:</value>
+  </data>
+  <data name="BillingForm_BillID" xml:space="preserve">
+    <value>Bill ID:</value>
+  </data>
+  <data name="BillingForm_UpdateStatus" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="BillingForm_DeleteBill" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Payment_Cash" xml:space="preserve">
     <value>Cash</value>
   </data>
@@ -423,6 +438,9 @@
   <data name="Message_SelectPaymentMethod" xml:space="preserve">
     <value>Please select a payment method.</value>
   </data>
+  <data name="Message_SelectReservationForBill" xml:space="preserve">
+    <value>Please select a reservation for this bill.</value>
+  </data>
   <data name="Message_InvalidReservation" xml:space="preserve">
     <value>Invalid reservation selected.</value>
   </data>
@@ -434,6 +452,90 @@
   </data>
   <data name="Message_BillSaveError" xml:space="preserve">
     <value>Could not save bill.</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="Message_BillLoadError" xml:space="preserve">
+    <value>Could not load bills.</value>
+  </data>
+  <data name="Message_SelectBill" xml:space="preserve">
+    <value>Please select a bill.</value>
+  </data>
+  <data name="Message_SelectPaymentStatus" xml:space="preserve">
+    <value>Please select Paid or Waiting.</value>
+  </data>
+  <data name="Message_PaymentStatusUpdated" xml:space="preserve">
+    <value>Payment status updated.</value>
+  </data>
+  <data name="Message_PaymentStatusUpdateError" xml:space="preserve">
+    <value>Could not update payment status.</value>
+  </data>
+  <data name="Message_SelectBillToDelete" xml:space="preserve">
+    <value>Please select a bill to delete.</value>
+  </data>
+  <data name="Message_InvalidBillId" xml:space="preserve">
+    <value>Invalid bill ID.</value>
+  </data>
+  <data name="Message_ConfirmBillDelete" xml:space="preserve">
+    <value>Are you sure you want to delete Bill ID: {0}?</value>
+  </data>
+  <data name="Message_DeleteBillTitle" xml:space="preserve">
+    <value>Delete Bill</value>
+  </data>
+  <data name="Message_BillDeleted" xml:space="preserve">
+    <value>Bill successfully deleted.</value>
+  </data>
+  <data name="Message_DeleteError" xml:space="preserve">
+    <value>Could not delete bill.</value>
+  </data>
+  <data name="Receipt_Title" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Receipt_Header" xml:space="preserve">
+    <value>Customer Receipt</value>
+  </data>
+  <data name="Receipt_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Receipt_Guests" xml:space="preserve">
+    <value>Guests</value>
+  </data>
+  <data name="Receipt_PremiumMeat" xml:space="preserve">
+    <value>Premium Meat</value>
+  </data>
+  <data name="Receipt_Drinks" xml:space="preserve">
+    <value>Drinks</value>
+  </data>
+  <data name="Receipt_Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Receipt_Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="Receipt_Tip" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="Receipt_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Receipt_PerPerson" xml:space="preserve">
+    <value>Per Person</value>
+  </data>
+  <data name="Receipt_PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="Receipt_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Receipt_ThankYou" xml:space="preserve">
+    <value>Thank you for dining with us.</value>
+  </data>
+  <data name="Receipt_Close" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="Message_NoChangesMade" xml:space="preserve">
     <value>No changes were made</value>

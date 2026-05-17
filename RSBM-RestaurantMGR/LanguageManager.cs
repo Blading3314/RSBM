@@ -44,6 +44,7 @@ namespace RSBM_RestaurantMGR
             { "editTableLabel", "TableForm_EditTable" },
             { "statusLabel", "TableForm_Status" },
             { "typeLabel", "TableForm_Type" },
+            { "tableStatusDateLabel", "TableForm_StatusDate" },
             { "btnUpdateTable", "TableForm_UpdateTable" },
 
             { "billing", "BillingForm_Header" },
@@ -62,7 +63,13 @@ namespace RSBM_RestaurantMGR
             { "premiumCheckBox", "BillingForm_PremiumMeat" },
             { "drinksCheckBox", "BillingForm_Drinks" },
             { "btnGenerateBill", "BillingForm_GenerateBill" },
-            {"BillIDLabel","BillingForm_BillIDlabel" }
+            { "lblPrice", "BillingForm_PricingSection" },
+            { "label2", "BillingForm_ExtrasSection" },
+            { "label3", "BillingForm_PaymentSection" },
+            { "reservationLabel", "BillingForm_Reservation" },
+            { "BillIDLabel", "BillingForm_BillID" },
+            { "btnUpdateStatus", "BillingForm_UpdateStatus" },
+            { "DeleteButton", "BillingForm_DeleteBill" }
         };
 
         static LanguageManager()

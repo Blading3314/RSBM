@@ -189,15 +189,6 @@
   <data name="ReservationForm_Clear" xml:space="preserve">
     <value>Limpiar</value>
   </data>
-  <data name="Dashboard_CustomerCount" xml:space="preserve">
-    <value>Conteo de Clientes</value>
-  </data>
-  <data name="Dashboard_Date" xml:space="preserve">
-    <value>Fecha</value>
-  </data>
-  <data name="Dashboard_Time" xml:space="preserve">
-    <value>Hora</value>
-  </data>
   <data name="ReservationForm_Refresh" xml:space="preserve">
     <value>Actualizar</value>
   </data>
@@ -268,7 +259,7 @@
     <value>El tamaño del grupo supera la capacidad de la mesa ({0} puestos).</value>
   </data>
   <data name="Message_TableAlreadyReserved" xml:space="preserve">
-    <value>La mesa ya está reservada para esta hora.</value>
+    <value>La mesa ya está reservada durante este bloque de 1 hora.</value>
   </data>
   <data name="Message_ReservationAddError" xml:space="preserve">
     <value>No se pudo agregar la reserva.</value>
@@ -305,6 +296,9 @@
   </data>
   <data name="TableForm_Type" xml:space="preserve">
     <value>Tipo:</value>
+  </data>
+  <data name="TableForm_StatusDate" xml:space="preserve">
+    <value>Fecha:</value>
   </data>
   <data name="TableForm_UpdateTable" xml:space="preserve">
     <value>Actualizar Mesa</value>
@@ -408,6 +402,27 @@
   <data name="BillingForm_GenerateBill" xml:space="preserve">
     <value>Generar Factura</value>
   </data>
+  <data name="BillingForm_PricingSection" xml:space="preserve">
+    <value>Precios</value>
+  </data>
+  <data name="BillingForm_ExtrasSection" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="BillingForm_PaymentSection" xml:space="preserve">
+    <value>Pago</value>
+  </data>
+  <data name="BillingForm_Reservation" xml:space="preserve">
+    <value>Reserva:</value>
+  </data>
+  <data name="BillingForm_BillID" xml:space="preserve">
+    <value>ID de factura:</value>
+  </data>
+  <data name="BillingForm_UpdateStatus" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="BillingForm_DeleteBill" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
   <data name="Payment_Cash" xml:space="preserve">
     <value>Efectivo</value>
   </data>
@@ -423,6 +438,9 @@
   <data name="Message_SelectPaymentMethod" xml:space="preserve">
     <value>Por favor seleccione un método de pago.</value>
   </data>
+  <data name="Message_SelectReservationForBill" xml:space="preserve">
+    <value>Por favor seleccione una reserva para esta factura.</value>
+  </data>
   <data name="Message_InvalidReservation" xml:space="preserve">
     <value>La reserva seleccionada no es válida.</value>
   </data>
@@ -434,6 +452,90 @@
   </data>
   <data name="Message_BillSaveError" xml:space="preserve">
     <value>No se pudo guardar la factura.</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Pagado</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>En espera</value>
+  </data>
+  <data name="Message_BillLoadError" xml:space="preserve">
+    <value>No se pudieron cargar las facturas.</value>
+  </data>
+  <data name="Message_SelectBill" xml:space="preserve">
+    <value>Por favor seleccione una factura.</value>
+  </data>
+  <data name="Message_SelectPaymentStatus" xml:space="preserve">
+    <value>Por favor seleccione Pagado o En espera.</value>
+  </data>
+  <data name="Message_PaymentStatusUpdated" xml:space="preserve">
+    <value>Estado de pago actualizado.</value>
+  </data>
+  <data name="Message_PaymentStatusUpdateError" xml:space="preserve">
+    <value>No se pudo actualizar el estado de pago.</value>
+  </data>
+  <data name="Message_SelectBillToDelete" xml:space="preserve">
+    <value>Por favor seleccione una factura para eliminar.</value>
+  </data>
+  <data name="Message_InvalidBillId" xml:space="preserve">
+    <value>ID de factura inválido.</value>
+  </data>
+  <data name="Message_ConfirmBillDelete" xml:space="preserve">
+    <value>¿Está seguro de eliminar la factura ID: {0}?</value>
+  </data>
+  <data name="Message_DeleteBillTitle" xml:space="preserve">
+    <value>Eliminar factura</value>
+  </data>
+  <data name="Message_BillDeleted" xml:space="preserve">
+    <value>Factura eliminada exitosamente.</value>
+  </data>
+  <data name="Message_DeleteError" xml:space="preserve">
+    <value>No se pudo eliminar la factura.</value>
+  </data>
+  <data name="Receipt_Title" xml:space="preserve">
+    <value>Recibo</value>
+  </data>
+  <data name="Receipt_Header" xml:space="preserve">
+    <value>Recibo del cliente</value>
+  </data>
+  <data name="Receipt_Date" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="Receipt_Guests" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="Receipt_PremiumMeat" xml:space="preserve">
+    <value>Carne Premium</value>
+  </data>
+  <data name="Receipt_Drinks" xml:space="preserve">
+    <value>Bebidas</value>
+  </data>
+  <data name="Receipt_Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Receipt_Tax" xml:space="preserve">
+    <value>Impuesto</value>
+  </data>
+  <data name="Receipt_Tip" xml:space="preserve">
+    <value>Propina</value>
+  </data>
+  <data name="Receipt_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Receipt_PerPerson" xml:space="preserve">
+    <value>Por persona</value>
+  </data>
+  <data name="Receipt_PaymentMethod" xml:space="preserve">
+    <value>Método de pago</value>
+  </data>
+  <data name="Receipt_Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Receipt_ThankYou" xml:space="preserve">
+    <value>Gracias por comer con nosotros.</value>
+  </data>
+  <data name="Receipt_Close" xml:space="preserve">
+    <value>Cerrar</value>
   </data>
   <data name="Message_NoChangesMade" xml:space="preserve">
     <value>No se realizaron cambios</value>

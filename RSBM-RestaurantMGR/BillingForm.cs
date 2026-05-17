@@ -29,14 +29,17 @@ namespace RSBM_RestaurantMGR
         {
             string selectedPayment = GetSelectedValue(paymentMethodComboBox);
             string selectedStatus = GetSelectedValue(Status);
+            string selectedReservation = GetSelectedValue(reservationComboBox);
 
             LanguageManager.ApplyLanguageToForm(this);
 
             LoadPaymentMethods();
             LoadPaymentStatus();
+            LoadReservationsForBilling();
 
             SelectComboBoxValue(paymentMethodComboBox, selectedPayment);
             SelectComboBoxValue(Status, selectedStatus);
+            SelectComboBoxValue(reservationComboBox, selectedReservation);
         }
 
         private void LoadPaymentMethods()
@@ -72,6 +75,65 @@ namespace RSBM_RestaurantMGR
                 "Waiting"));
 
             Status.EndUpdate();
+        }
+
+        private void LoadReservationsForBilling()
+        {
+            try
+            {
+                reservationComboBox.BeginUpdate();
+                reservationComboBox.Items.Clear();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query =
+                        @"SELECT
+                              r.ReservationID,
+                              c.CustomerName,
+                              rt.TableNumber,
+                              r.ReservationDate,
+                              r.ReservationTime
+                          FROM Reservations r
+                          INNER JOIN Customers c
+                              ON r.CustomerID = c.CustomerID
+                          INNER JOIN RestaurantTables rt
+                              ON r.TableID = rt.TableID
+                          LEFT JOIN Bills b
+                              ON b.ReservationID = r.ReservationID
+                          WHERE b.BillID IS NULL
+                          ORDER BY r.ReservationDate, r.ReservationTime, c.CustomerName";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        DateTime reservationDate = Convert.ToDateTime(reader["ReservationDate"]);
+                        TimeSpan reservationTime = (TimeSpan)reader["ReservationTime"];
+                        string displayText = string.Format(
+                            "#{0} - {1} - Table {2} - {3} {4}",
+                            reader["ReservationID"],
+                            reader["CustomerName"],
+                            reader["TableNumber"],
+                            reservationDate.ToString("MMM dd"),
+                            DateTime.Today.Add(reservationTime).ToString("hh:mm tt"));
+
+                        reservationComboBox.Items.Add(new ComboBoxItem(
+                            displayText,
+                            reader["ReservationID"].ToString()));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Message_BillReservationLoadError", ex);
+            }
+            finally
+            {
+                reservationComboBox.EndUpdate();
+            }
         }
 
         private static string GetSelectedValue(
@@ -129,13 +191,44 @@ namespace RSBM_RestaurantMGR
         }
         private void CalculateBill()
         {
+            decimal subTotal;
+            decimal taxAmount;
+            decimal tipAmount;
+            decimal total;
+            decimal pricePerPerson;
+
+            if (!TryCalculateBill(out subTotal, out taxAmount, out tipAmount, out total, out pricePerPerson))
+            {
+                return;
+            }
+
+            subtotalTextBox.Text = subTotal.ToString("0.00");
+            totalTextBox.Text = total.ToString("0.00");
+            pricePerPersonTextBox.Text = pricePerPerson.ToString("0.00");
+        }
+
+        private bool TryCalculateBill(
+            out decimal subTotal,
+            out decimal taxAmount,
+            out decimal tipAmount,
+            out decimal total,
+            out decimal pricePerPerson)
+        {
+            subTotal = 0;
+            taxAmount = 0;
+            tipAmount = 0;
+            total = 0;
+            pricePerPerson = 0;
+
             int people = (int)numberOfPeople.Value;
 
             if (people <= 0)
-                return;
+            {
+                return false;
+            }
 
             // BASE PRICE
-            decimal subTotal = 50 * people;
+            subTotal = 50 * people;
 
             // EXTRAS
             if (drinksCheckBox.Checked)
@@ -145,44 +238,44 @@ namespace RSBM_RestaurantMGR
                 subTotal += 25 * people;
 
             // AUTO TAX 15%
-            decimal taxAmount = subTotal * 0.15m;
+            taxAmount = subTotal * 0.15m;
 
             // USER TIP %
             decimal tipPercent = numericUpDown1.Value;
 
-            decimal tipAmount =
+            tipAmount =
                 subTotal * (tipPercent / 100);
 
             // FINAL TOTAL
-            decimal total =
+            total =
                 subTotal + taxAmount + tipAmount;
 
-            // UI
-            subtotalTextBox.Text =
-                subTotal.ToString("0.00");
-
-            totalTextBox.Text =
-                total.ToString("0.00");
-
             // PER PERSON
-            pricePerPersonTextBox.Text =
-                (total / people).ToString("0.00");
+            pricePerPerson = total / people;
+            return true;
         }
 
         private void LoadBills()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                string query = "SELECT * FROM Bills";
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT * FROM Bills";
 
-                SqlDataAdapter adapter =
-                    new SqlDataAdapter(query, conn);
+                    SqlDataAdapter adapter =
+                        new SqlDataAdapter(query, conn);
 
-                DataTable table = new DataTable();
+                    DataTable table = new DataTable();
 
-                adapter.Fill(table);
+                    adapter.Fill(table);
 
-                dataGridBill.DataSource = table;
+                    dataGridBill.DataSource = table;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Message_BillLoadError", ex);
             }
         }
         private void btnUpdateStatus_Click(object sender, EventArgs e)
@@ -202,13 +295,13 @@ namespace RSBM_RestaurantMGR
 
             if (billID == 0)
             {
-                MessageBox.Show("Please select a bill.");
+                ShowMessage("Message_SelectBill");
                 return;
             }
 
             if (Status.SelectedItem == null)
             {
-                MessageBox.Show("Select Paid or Waiting.");
+                ShowMessage("Message_SelectPaymentStatus");
                 return;
             }
 
@@ -223,37 +316,57 @@ namespace RSBM_RestaurantMGR
                 paymentStatus = Status.SelectedItem.ToString();
             }
 
-            using (SqlConnection conn =
-                new SqlConnection(connectionString))
+            try
             {
-                string query =
-                    @"UPDATE Bills
-              SET PaymentStatus = @PaymentStatus
-              WHERE BillID = @BillID";
+                using (SqlConnection conn =
+                    new SqlConnection(connectionString))
+                {
+                    string query =
+                        @"UPDATE Bills
+                  SET PaymentStatus = @PaymentStatus
+                  WHERE BillID = @BillID";
 
-                SqlCommand cmd =
-                    new SqlCommand(query, conn);
+                    SqlCommand cmd =
+                        new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@PaymentStatus", paymentStatus);
-                cmd.Parameters.AddWithValue("@BillID", billID);
+                    cmd.Parameters.AddWithValue("@PaymentStatus", paymentStatus);
+                    cmd.Parameters.AddWithValue("@BillID", billID);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                ShowMessage("Message_PaymentStatusUpdated");
+
+                selectedBillId.Clear();
+                Status.SelectedIndex = -1;
+                dataGridBill.ClearSelection();
+
+                LoadBills();
             }
-
-            MessageBox.Show("Payment status updated!");
-
-            selectedBillId.Clear();
-            Status.SelectedIndex = -1;
-            dataGridBill.ClearSelection();
-
-            LoadBills();
+            catch (Exception ex)
+            {
+                ShowError("Message_PaymentStatusUpdateError", ex);
+            }
         }
 
         private void btnGenerateBill_Click(object sender, EventArgs e)
         {
+            ComboBoxItem reservationItem =
+                reservationComboBox.SelectedItem as ComboBoxItem;
 
-            CalculateBill();
+            if (reservationItem == null)
+            {
+                ShowMessage("Message_SelectReservationForBill");
+                return;
+            }
+
+            int reservationId;
+            if (!int.TryParse(reservationItem.Value, out reservationId))
+            {
+                ShowMessage("Message_InvalidReservation");
+                return;
+            }
 
             if (paymentMethodComboBox.SelectedIndex == -1)
             {
@@ -273,16 +386,18 @@ namespace RSBM_RestaurantMGR
             string paymentMethod = paymentItem.Value;
 
             decimal subtotal;
+            decimal taxAmount;
+            decimal tipAmount;
             decimal total;
+            decimal pricePerPerson;
 
-
-            if (!decimal.TryParse(subtotalTextBox.Text, out subtotal) ||
-                !decimal.TryParse(totalTextBox.Text, out total))
+            if (!TryCalculateBill(out subtotal, out taxAmount, out tipAmount, out total, out pricePerPerson))
             {
                 ShowMessage("Message_InvalidBillTotal");
                 return;
             }
-            decimal taxAmount = subtotal * 0.15m;
+
+            string paymentStatus = "Waiting";
 
             try
             {
@@ -290,29 +405,105 @@ namespace RSBM_RestaurantMGR
                 {
                     string query =
                         @"INSERT INTO Bills
-                ( SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
+                ( ReservationID, SubTotal, TaxAmount, TotalAmount, PaymentMethod, PaymentStatus)
                 VALUES
-                ( @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
+                ( @ReservationID, @SubTotal, @TaxAmount, @TotalAmount, @PaymentMethod, @PaymentStatus)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
+                    cmd.Parameters.AddWithValue("@ReservationID", reservationId);
                     cmd.Parameters.AddWithValue("@SubTotal", subtotal);
                     cmd.Parameters.AddWithValue("@TaxAmount",taxAmount);
                     cmd.Parameters.AddWithValue("@TotalAmount", total);
                     cmd.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
-                    cmd.Parameters.AddWithValue("@PaymentStatus", "Waiting");
+                    cmd.Parameters.AddWithValue("@PaymentStatus", paymentStatus);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
 
-                ShowMessage("Message_BillSaved");
                 LoadBills();
+                LoadReservationsForBilling();
+                ShowReceiptWindow(subtotal, taxAmount, tipAmount, total, pricePerPerson, paymentItem.Text, paymentStatus);
             }
             catch (Exception ex)
             {
                 ShowError("Message_BillSaveError", ex);
             }
+        }
+
+        private void ShowReceiptWindow(
+            decimal subtotal,
+            decimal taxAmount,
+            decimal tipAmount,
+            decimal total,
+            decimal pricePerPerson,
+            string paymentMethod,
+            string paymentStatus)
+        {
+            Form receiptForm = new Form();
+            receiptForm.Text = LanguageManager.GetString("Receipt_Title");
+            receiptForm.StartPosition = FormStartPosition.CenterParent;
+            receiptForm.Size = new Size(420, 520);
+            receiptForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+            receiptForm.MaximizeBox = false;
+            receiptForm.MinimizeBox = false;
+
+            TextBox receiptTextBox = new TextBox();
+            receiptTextBox.Multiline = true;
+            receiptTextBox.ReadOnly = true;
+            receiptTextBox.ScrollBars = ScrollBars.Vertical;
+            receiptTextBox.Font = new Font("Consolas", 10F);
+            receiptTextBox.Dock = DockStyle.Fill;
+            receiptTextBox.Text = BuildReceiptText(
+                subtotal,
+                taxAmount,
+                tipAmount,
+                total,
+                pricePerPerson,
+                paymentMethod,
+                paymentStatus);
+
+            Button closeButton = new Button();
+            closeButton.Text = LanguageManager.GetString("Receipt_Close");
+            closeButton.Dock = DockStyle.Bottom;
+            closeButton.Height = 36;
+            closeButton.Click += (s, e) => receiptForm.Close();
+
+            receiptForm.Controls.Add(receiptTextBox);
+            receiptForm.Controls.Add(closeButton);
+            receiptForm.ShowDialog(this);
+        }
+
+        private string BuildReceiptText(
+            decimal subtotal,
+            decimal taxAmount,
+            decimal tipAmount,
+            decimal total,
+            decimal pricePerPerson,
+            string paymentMethod,
+            string paymentStatus)
+        {
+            StringBuilder receipt = new StringBuilder();
+            receipt.AppendLine("RSBM Korean BBQ");
+            receipt.AppendLine(LanguageManager.GetString("Receipt_Header"));
+            receipt.AppendLine("----------------------------------------");
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_Date"), DateTime.Now));
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_Guests"), numberOfPeople.Value));
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_PremiumMeat"), premiumCheckBox.Checked ? LanguageManager.GetString("MainForm_Yes") : LanguageManager.GetString("MainForm_No")));
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_Drinks"), drinksCheckBox.Checked ? LanguageManager.GetString("MainForm_Yes") : LanguageManager.GetString("MainForm_No")));
+            receipt.AppendLine("----------------------------------------");
+            receipt.AppendLine(string.Format("{0}: ${1:0.00}", LanguageManager.GetString("Receipt_Subtotal"), subtotal));
+            receipt.AppendLine(string.Format("{0}: ${1:0.00}", LanguageManager.GetString("Receipt_Tax"), taxAmount));
+            receipt.AppendLine(string.Format("{0}: ${1:0.00}", LanguageManager.GetString("Receipt_Tip"), tipAmount));
+            receipt.AppendLine(string.Format("{0}: ${1:0.00}", LanguageManager.GetString("Receipt_Total"), total));
+            receipt.AppendLine(string.Format("{0}: ${1:0.00}", LanguageManager.GetString("Receipt_PerPerson"), pricePerPerson));
+            receipt.AppendLine("----------------------------------------");
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_PaymentMethod"), paymentMethod));
+            receipt.AppendLine(string.Format("{0}: {1}", LanguageManager.GetString("Receipt_Status"), LanguageManager.GetString(paymentStatus)));
+            receipt.AppendLine();
+            receipt.AppendLine(LanguageManager.GetString("Receipt_ThankYou"));
+            return receipt.ToString();
         }
 
         private void ShowMessage(string resourceKey)
@@ -366,18 +557,22 @@ namespace RSBM_RestaurantMGR
         {
             if (string.IsNullOrEmpty(selectedBillId.Text))
             {
-                MessageBox.Show("Please select a bill to delete.");
+                ShowMessage("Message_SelectBillToDelete");
                 return;
             }
 
             int billID;
             if (!int.TryParse(selectedBillId.Text, out billID))
             {
-                MessageBox.Show("Invalid Bill ID.");
+                ShowMessage("Message_InvalidBillId");
                 return;
             }
 
-            DialogResult result = MessageBox.Show(string.Format("Are you sure you want to delete Bill ID: {0}?", billID), "Delete Bill", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(
+                string.Format(LanguageManager.GetString("Message_ConfirmBillDelete"), billID),
+                LanguageManager.GetString("Message_DeleteBillTitle"),
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
@@ -394,7 +589,7 @@ namespace RSBM_RestaurantMGR
                         cmd.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Bill successfully deleted.");
+                    ShowMessage("Message_BillDeleted");
                     selectedBillId.Clear();
                     Status.SelectedIndex = -1;
                     LoadBills();

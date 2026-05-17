@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,6 +15,7 @@ namespace RSBM_RestaurantMGR
         Integrated Security=True";
 
         private int selectedReservationId = 0;
+        private const int ReservationDurationMinutes = 60;
 
         public ReservationForm()
         {
@@ -25,17 +27,20 @@ namespace RSBM_RestaurantMGR
             resDate.MaxDate = DateTime.Today.AddMonths(2);
 
             LoadTimeSlots();
+            ConfigureTimeSlotDisplay();
             LoadStatusOptions();
-            LoadReservations();
-            LoadAvailableTables();
-
             SelectFirstItem(resTimeSlot);
             SelectFirstItem(resStatus);
+            LoadReservations();
+            LoadAvailableTables();
 
             btnEditReservation.Enabled = false;
             btnDeleteReservation.Enabled = false;
 
             reservationGrid.CellClick += reservationGrid_CellClick;
+            resDate.ValueChanged += reservationDateOrTime_Changed;
+            resTimeSlot.SelectedIndexChanged += reservationDateOrTime_Changed;
+            resTable.SelectedIndexChanged += (s, e) => resTimeSlot.Invalidate();
 
             this.Shown += (s, e) =>
             {
@@ -107,6 +112,8 @@ namespace RSBM_RestaurantMGR
 
             int tableId = Convert.ToInt32(resTable.SelectedItem);
             DateTime selectedTime = DateTime.Parse(resTimeSlot.Text);
+            TimeSpan reservationStartTime = selectedTime.TimeOfDay;
+            TimeSpan reservationEndTime = selectedTime.AddMinutes(ReservationDurationMinutes).TimeOfDay;
 
             try
             {
@@ -139,12 +146,14 @@ namespace RSBM_RestaurantMGR
                         @"SELECT COUNT(*)
                           FROM Reservations
                           WHERE TableID = @TableID
-                          AND ReservationDate = @ReservationDate
-                          AND ReservationTime = @ReservationTime", conn);
+                          AND CAST(ReservationDate AS date) = @ReservationDate
+                          AND CAST(ReservationTime AS time) < @ReservationEndTime
+                          AND DATEADD(minute, 60, CAST(ReservationTime AS time)) > @ReservationStartTime", conn);
 
                     checkCmd.Parameters.AddWithValue("@TableID", tableId);
                     checkCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
-                    checkCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+                    checkCmd.Parameters.AddWithValue("@ReservationStartTime", reservationStartTime);
+                    checkCmd.Parameters.AddWithValue("@ReservationEndTime", reservationEndTime);
 
                     int existing = Convert.ToInt32(checkCmd.ExecuteScalar());
 
@@ -183,28 +192,6 @@ namespace RSBM_RestaurantMGR
 
                     reservationCmd.ExecuteNonQuery();
 
-                    // UPDATE TABLE STATUS
-                    string tableStatus = "Available";
-
-                    if (resStatus.Text == "Confirmed")
-                    {
-                        tableStatus = "Reserved";
-                    } 
-                    else if (resStatus.Text == "Seated")
-                    {
-                        tableStatus = "Occupied";
-                    }
-
-                    SqlCommand tableCmd = new SqlCommand(
-                        @"UPDATE RestaurantTables
-                          SET Status = @Status
-                          WHERE TableID = @TableID", conn);
-
-                    tableCmd.Parameters.AddWithValue("@Status", tableStatus);
-                    tableCmd.Parameters.AddWithValue("@TableID", tableId);
-
-                    tableCmd.ExecuteNonQuery();
-
                     ShowMessage("Message_ReservationAdded");
 
                     ReloadReservationData();
@@ -231,22 +218,14 @@ namespace RSBM_RestaurantMGR
 
             int tableId = Convert.ToInt32(resTable.SelectedItem);
             DateTime selectedTime = DateTime.Parse(resTimeSlot.Text);
+            TimeSpan reservationStartTime = selectedTime.TimeOfDay;
+            TimeSpan reservationEndTime = selectedTime.AddMinutes(ReservationDurationMinutes).TimeOfDay;
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-
-                    // GET OLD TABLE ID
-                    SqlCommand oldTableCmd = new SqlCommand(
-                        @"SELECT TableID
-                          FROM Reservations
-                          WHERE ReservationID = @ReservationID", conn);
-
-                    oldTableCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
-
-                    int oldTableId = Convert.ToInt32(oldTableCmd.ExecuteScalar());
 
                     // CHECK CAPACITY
                     SqlCommand capacityCmd = new SqlCommand(
@@ -273,13 +252,15 @@ namespace RSBM_RestaurantMGR
                         @"SELECT COUNT(*)
                           FROM Reservations
                           WHERE TableID = @TableID
-                          AND ReservationDate = @ReservationDate
-                          AND ReservationTime = @ReservationTime
+                          AND CAST(ReservationDate AS date) = @ReservationDate
+                          AND CAST(ReservationTime AS time) < @ReservationEndTime
+                          AND DATEADD(minute, 60, CAST(ReservationTime AS time)) > @ReservationStartTime
                           AND ReservationID <> @ReservationID", conn);
 
                     checkCmd.Parameters.AddWithValue("@TableID", tableId);
                     checkCmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
-                    checkCmd.Parameters.AddWithValue("@ReservationTime", selectedTime.TimeOfDay);
+                    checkCmd.Parameters.AddWithValue("@ReservationStartTime", reservationStartTime);
+                    checkCmd.Parameters.AddWithValue("@ReservationEndTime", reservationEndTime);
                     checkCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
                     int existing = Convert.ToInt32(checkCmd.ExecuteScalar());
@@ -327,41 +308,6 @@ namespace RSBM_RestaurantMGR
 
                     reservationCmd.ExecuteNonQuery();
 
-                    // RESET OLD TABLE
-                    if (oldTableId != tableId)
-                    {
-                        SqlCommand oldTableUpdate = new SqlCommand(
-                            @"UPDATE RestaurantTables
-                              SET Status = 'Available'
-                              WHERE TableID = @TableID", conn);
-
-                        oldTableUpdate.Parameters.AddWithValue("@TableID", oldTableId);
-
-                        oldTableUpdate.ExecuteNonQuery();
-                    }
-
-                    // UPDATE NEW TABLE STATUS
-                    string tableStatus = "Available";
-
-                    if (resStatus.Text == "Confirmed")
-                    {
-                        tableStatus = "Reserved";
-                    }
-                    else if (resStatus.Text == "Seated")
-                    {
-                        tableStatus = "Occupied";
-                    }
-
-                    SqlCommand tableCmd = new SqlCommand(
-                        @"UPDATE RestaurantTables
-                          SET Status = @Status
-                          WHERE TableID = @TableID", conn);
-
-                    tableCmd.Parameters.AddWithValue("@Status", tableStatus);
-                    tableCmd.Parameters.AddWithValue("@TableID", tableId);
-
-                    tableCmd.ExecuteNonQuery();
-
                     ShowMessage("Message_ReservationUpdated");
 
                     ReloadReservationData();
@@ -399,16 +345,6 @@ namespace RSBM_RestaurantMGR
                 {
                     conn.Open();
 
-                    // GET TABLE ID
-                    SqlCommand tableCmd = new SqlCommand(
-                        @"SELECT TableID
-                          FROM Reservations
-                          WHERE ReservationID = @ReservationID", conn);
-
-                    tableCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
-
-                    int tableId = Convert.ToInt32(tableCmd.ExecuteScalar());
-
                     // DELETE RESERVATION
                     SqlCommand deleteCmd = new SqlCommand(
                         @"DELETE FROM Reservations
@@ -417,16 +353,6 @@ namespace RSBM_RestaurantMGR
                     deleteCmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
                     deleteCmd.ExecuteNonQuery();
-
-                    // UPDATE TABLE STATUS
-                    SqlCommand updateCmd = new SqlCommand(
-                        @"UPDATE RestaurantTables
-                          SET Status = 'Available'
-                          WHERE TableID = @TableID", conn);
-
-                    updateCmd.Parameters.AddWithValue("@TableID", tableId);
-
-                    updateCmd.ExecuteNonQuery();
 
                     ShowMessage("Message_ReservationDeleted");
 
@@ -550,6 +476,95 @@ namespace RSBM_RestaurantMGR
             }
         }
 
+        private void ConfigureTimeSlotDisplay()
+        {
+            resTimeSlot.DrawMode = DrawMode.OwnerDrawFixed;
+            resTimeSlot.DrawItem += resTimeSlot_DrawItem;
+        }
+
+        private void resTimeSlot_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+            {
+                return;
+            }
+
+            e.DrawBackground();
+
+            string timeText = resTimeSlot.Items[e.Index].ToString();
+            DateTime selectedTime;
+            bool unavailable = DateTime.TryParse(timeText, out selectedTime) &&
+                               IsTimeSlotUnavailable(selectedTime);
+
+            Color textColor = unavailable ? Color.Firebrick : e.ForeColor;
+
+            using (Brush textBrush = new SolidBrush(textColor))
+            {
+                e.Graphics.DrawString(timeText, e.Font, textBrush, e.Bounds);
+            }
+
+            e.DrawFocusRectangle();
+        }
+
+        private bool IsTimeSlotUnavailable(DateTime selectedTime)
+        {
+            TimeSpan reservationStartTime = selectedTime.TimeOfDay;
+            TimeSpan reservationEndTime = selectedTime.AddMinutes(ReservationDurationMinutes).TimeOfDay;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    if (resTable.SelectedItem != null)
+                    {
+                        cmd.CommandText =
+                            @"SELECT COUNT(*)
+                              FROM Reservations
+                              WHERE TableID = @TableID
+                              AND CAST(ReservationDate AS date) = @ReservationDate
+                              AND CAST(ReservationTime AS time) < @ReservationEndTime
+                              AND DATEADD(minute, 60, CAST(ReservationTime AS time)) > @ReservationStartTime
+                              AND ReservationID <> @ReservationID";
+
+                        cmd.Parameters.AddWithValue("@TableID", Convert.ToInt32(resTable.SelectedItem));
+                    }
+                    else
+                    {
+                        cmd.CommandText =
+                            @"SELECT COUNT(*)
+                              FROM RestaurantTables
+                              WHERE NOT EXISTS
+                              (
+                                  SELECT 1
+                                  FROM Reservations
+                                  WHERE Reservations.TableID = RestaurantTables.TableID
+                                  AND CAST(Reservations.ReservationDate AS date) = @ReservationDate
+                                  AND CAST(Reservations.ReservationTime AS time) < @ReservationEndTime
+                                  AND DATEADD(minute, 60, CAST(Reservations.ReservationTime AS time)) > @ReservationStartTime
+                                  AND Reservations.ReservationID <> @ReservationID
+                              )";
+                    }
+
+                    cmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    cmd.Parameters.AddWithValue("@ReservationStartTime", reservationStartTime);
+                    cmd.Parameters.AddWithValue("@ReservationEndTime", reservationEndTime);
+                    cmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
+
+                    conn.Open();
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    return resTable.SelectedItem != null ? count > 0 : count == 0;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void LoadStatusOptions()
         {
             LanguageManager.UpdateComboBoxItems(
@@ -568,6 +583,16 @@ namespace RSBM_RestaurantMGR
             {
                 resTable.Items.Clear();
 
+                DateTime selectedTime;
+                if (resTimeSlot.SelectedItem == null ||
+                    !DateTime.TryParse(resTimeSlot.SelectedItem.ToString(), out selectedTime))
+                {
+                    return;
+                }
+
+                TimeSpan reservationStartTime = selectedTime.TimeOfDay;
+                TimeSpan reservationEndTime = selectedTime.AddMinutes(ReservationDurationMinutes).TimeOfDay;
+
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
@@ -575,10 +600,23 @@ namespace RSBM_RestaurantMGR
                     string query =
                     @"SELECT TableID
                       FROM RestaurantTables
-                      WHERE Status = 'Available'
+                      WHERE NOT EXISTS
+                      (
+                          SELECT 1
+                          FROM Reservations
+                          WHERE Reservations.TableID = RestaurantTables.TableID
+                          AND CAST(Reservations.ReservationDate AS date) = @ReservationDate
+                          AND CAST(Reservations.ReservationTime AS time) < @ReservationEndTime
+                          AND DATEADD(minute, 60, CAST(Reservations.ReservationTime AS time)) > @ReservationStartTime
+                          AND Reservations.ReservationID <> @ReservationID
+                      )
                       ORDER BY TableNumber";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@ReservationDate", resDate.Value.Date);
+                    cmd.Parameters.AddWithValue("@ReservationStartTime", reservationStartTime);
+                    cmd.Parameters.AddWithValue("@ReservationEndTime", reservationEndTime);
+                    cmd.Parameters.AddWithValue("@ReservationID", selectedReservationId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -599,6 +637,12 @@ namespace RSBM_RestaurantMGR
             }
         }
 
+        private void reservationDateOrTime_Changed(object sender, EventArgs e)
+        {
+            LoadAvailableTables();
+            resTimeSlot.Invalidate();
+        }
+
         private void ReloadReservationData()
         {
             LoadReservations();
@@ -611,6 +655,8 @@ namespace RSBM_RestaurantMGR
             resName.Clear();
             resPhone.Clear();
 
+            selectedReservationId = 0;
+
             resPartySize.Value = 1;
             resDate.Value = DateTime.Now;
 
@@ -618,8 +664,6 @@ namespace RSBM_RestaurantMGR
             SelectFirstItem(resStatus);
 
             reservationGrid.ClearSelection();
-
-            selectedReservationId = 0;
 
             btnEditReservation.Enabled = false;
             btnDeleteReservation.Enabled = false;

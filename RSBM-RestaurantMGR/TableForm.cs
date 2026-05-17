@@ -45,6 +45,12 @@ namespace RSBM_RestaurantMGR
 
         private void InitializeTableControls()
         {
+            tableStatusDatePicker.CustomFormat = "MMM dd, yyyy";
+            tableStatusDatePicker.MinDate = DateTime.Today;
+            tableStatusDatePicker.MaxDate = DateTime.Today.AddMonths(2);
+            tableStatusDatePicker.Value = DateTime.Today;
+            tableStatusDatePicker.ValueChanged += tableStatusDatePicker_ValueChanged;
+
             tableGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             tableGrid.MultiSelect = false;
             tableGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -68,14 +74,25 @@ namespace RSBM_RestaurantMGR
 
                     string query = @"
                         SELECT
-                            TableID,
-                            TableNumber,
-                            Capacity,
-                            Status
-                        FROM RestaurantTables
-                        ORDER BY TableNumber";
+                            rt.TableID,
+                            rt.TableNumber,
+                            rt.Capacity,
+                            CASE
+                                WHEN rt.Status = 'Occupied' THEN 'Occupied'
+                                WHEN EXISTS
+                                (
+                                    SELECT 1
+                                    FROM Reservations r
+                                    WHERE r.TableID = rt.TableID
+                                    AND CAST(r.ReservationDate AS date) = @StatusDate
+                                ) THEN 'Reserved'
+                                ELSE rt.Status
+                            END AS Status
+                        FROM RestaurantTables rt
+                        ORDER BY rt.TableNumber";
 
                     SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                    adapter.SelectCommand.Parameters.AddWithValue("@StatusDate", tableStatusDatePicker.Value.Date);
 
                     DataTable dt = new DataTable();
 
@@ -222,6 +239,12 @@ namespace RSBM_RestaurantMGR
         private void tableGrid_SelectionChanged(object sender, EventArgs e)
         {
             LoadSelectedTable();
+        }
+
+        private void tableStatusDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            LoadTables();
+            ClearSelection();
         }
 
         private void LoadSelectedTable()
